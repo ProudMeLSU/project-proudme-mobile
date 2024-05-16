@@ -9,9 +9,6 @@ class SigninPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Signin'),
-        ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -68,6 +65,8 @@ class SigninPage extends StatelessWidget {
           ),
         ),
       ),
+      debugShowCheckedModeBanner: false,
+
     );
   }
 }

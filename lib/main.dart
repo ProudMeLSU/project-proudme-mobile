@@ -19,7 +19,23 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: SigninPage(), // Replace MyHomePage with SignupPage
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Text(
+            'Proud Me',
+            style: TextStyle(
+              color: Color(0xfff5b342),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: true,
+        ),
+        body: SigninPage()
+      ),
+      debugShowCheckedModeBanner: false,
     );
+
+    
   }
 }

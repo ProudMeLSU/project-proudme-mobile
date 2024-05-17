@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(SigninPage());
+  runApp(SignInScreen());
 }
 
-class SigninPage extends StatelessWidget {
+class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Text(
+            'Proud Me',
+            style: TextStyle(
+              color: Color(0xfff5b342),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          centerTitle: true,
+        ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

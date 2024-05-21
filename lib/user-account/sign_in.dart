@@ -1,10 +1,33 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'sign_up.dart';
 
-void main() {
-  runApp(SignInScreen());
+class SignInScreen extends StatefulWidget {
+  @override
+  _SignInScreenState createState() => _SignInScreenState();
 }
 
-class SignInScreen extends StatelessWidget {
+class _SignInScreenState extends State<SignInScreen> {
+  Map<String, dynamic> formData = {
+    'email': '',
+    'password': '',
+  };
+
+  bool allFieldsFilled = false;
+
+  void updateFormData(String field, dynamic value) {
+    setState(() {
+      formData[field] = value;
+
+      allFieldsFilled = formData.values.every((element) => element != '');
+    });
+  }
+
+  void handleLogin() {
+    String jsonData = jsonEncode(formData);
+    print(jsonData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,6 +56,7 @@ class SignInScreen extends StatelessWidget {
                   decoration: InputDecoration(
                     labelText: 'Username/Email',
                   ),
+                  onChanged: (value) => updateFormData('email', value),
                 ),
               ),
               SizedBox(height: 10),
@@ -40,6 +64,7 @@ class SignInScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
                   obscureText: true,
+                  onChanged: (value) => updateFormData('password', value),
                   decoration: InputDecoration(
                     labelText: 'Password',
                   ),
@@ -47,9 +72,7 @@ class SignInScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  // Implement login functionality
-                },
+                onPressed: allFieldsFilled ? handleLogin : null,
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                     Theme.of(context).colorScheme.secondary,
@@ -68,7 +91,10 @@ class SignInScreen extends StatelessWidget {
               Text("Don't have an account?"),
               TextButton(
                 onPressed: () {
-                  // Implement navigation to registration page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUpScreen()),
+                  );
                 },
                 child: Text('Register Here'),
               ),

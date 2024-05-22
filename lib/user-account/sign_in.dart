@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'sign_up.dart';
+import 'forgot_credentials.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -83,7 +84,10 @@ class _SignInScreenState extends State<SignInScreen> {
               SizedBox(height: 10),
               TextButton(
                 onPressed: () {
-                  // Implement forgot password functionality
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ForgetCredentialsScreen()),
+                  );
                 },
                 child: Text('Forgot your Username or Password?'),
               ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constant.dart';
+
 class TextListWidget extends StatelessWidget {
   final String title;
   final List<String> texts;
@@ -22,7 +24,7 @@ class TextListWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              fontFamily: 'Montserrat',
+              fontFamily: fontFamily,
               color: Theme.of(context).primaryColor,
             ),
           ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../constant.dart';
+
 class IntroductionFooterWidget extends StatelessWidget {
   final String regularText;
   final String clickableText;
@@ -19,7 +21,7 @@ class IntroductionFooterWidget extends StatelessWidget {
         children: [
           Text(
               regularText,
-              style: TextStyle(fontSize: 16.0, fontFamily: 'Montserrat'),
+              style: TextStyle(fontSize: 16.0, fontFamily: fontFamily),
           ),
           Center(
             child: ElevatedButton.icon(

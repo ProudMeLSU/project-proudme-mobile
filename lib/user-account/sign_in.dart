@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+
 import 'sign_up.dart';
 import 'forgot_credentials.dart';
+import '../constant.dart';
+import '../language.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -36,7 +39,7 @@ class _SignInScreenState extends State<SignInScreen> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(
-            'Proud Me',
+            projectTitle,
             style: TextStyle(
               color: Color(0xfff5b342),
               fontWeight: FontWeight.bold,
@@ -49,7 +52,7 @@ class _SignInScreenState extends State<SignInScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 20),
-              Image.asset('assets/proudme_logo.png'),
+              Image.asset(mainLogoPath),
               SizedBox(height: 20),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),

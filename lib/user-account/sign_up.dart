@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'sign_up_verification.dart';
+import '../constant.dart';
+import '../language.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -29,10 +31,9 @@ Map<String, dynamic> formData = {
   bool allFieldsFilled = false;
 
   String generateRandomString(int length) {
-    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     final random = Random();
     return String.fromCharCodes(Iterable.generate(
-        length, (_) => chars.codeUnitAt(random.nextInt(chars.length))));
+        length, (_) => charSets.codeUnitAt(random.nextInt(charSets.length))));
   }
 
   void updateFormData(String field, dynamic value) {
@@ -72,7 +73,7 @@ Map<String, dynamic> formData = {
       appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(
-            'ProudMe',
+            projectTitle,
             style: TextStyle(
               color: Color(0xfff5b342),
               fontWeight: FontWeight.bold,
@@ -86,10 +87,10 @@ Map<String, dynamic> formData = {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(height: 20),
-            Image.asset('assets/proudme_logo.png'),
+            Image.asset(mainLogoPath),
             SizedBox(height: 20),
             Text(
-              'Thank You for joining ProudMe!',
+              thankYouMessage,
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
@@ -126,20 +127,7 @@ Map<String, dynamic> formData = {
             DropdownButtonFormField<String>(
               decoration: InputDecoration(labelText: 'Birth Month'),
               onChanged: (value) => updateFormData('birthMonth', value),
-              items: <String>[
-                'January',
-                'February',
-                'March',
-                'April',
-                'May',
-                'June',
-                'July',
-                'August',
-                'September',
-                'October',
-                'November',
-                'December',
-              ].map<DropdownMenuItem<String>>((String value) {
+              items: months.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -160,13 +148,7 @@ Map<String, dynamic> formData = {
             DropdownButtonFormField<String>(
               decoration: InputDecoration(labelText: 'Grade Level'),
               onChanged: (value) => updateFormData('gradeLevel', value),
-              items: <String>[
-                '5th',
-                '6th',
-                '7th',
-                '8th',
-                '9th',
-              ].map<DropdownMenuItem<String>>((String value) {
+              items: grades.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -176,12 +158,7 @@ Map<String, dynamic> formData = {
             DropdownButtonFormField<String>(
               decoration: InputDecoration(labelText: 'Gender'),
               onChanged: (value) => updateFormData('gender', value),
-              items: <String>[
-                'Male',
-                'Female',
-                'Other',
-                'Prefer not to tell',
-              ].map<DropdownMenuItem<String>>((String value) {
+              items: genders.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(value),
@@ -201,7 +178,7 @@ Map<String, dynamic> formData = {
                     updateFormData('agreeToTerms', value);
                   },
                 ),
-                Text('Agree to terms of service'),
+                Text(serviceAgreement),
               ],
             ),
             Row(
@@ -212,7 +189,7 @@ Map<String, dynamic> formData = {
                     updateFormData('agreeToAdUpdates', value);
                   },
                 ),
-                Text('Agree to receive ad updates by email'),
+                Text(adsAgreement),
               ],
             ),
             ElevatedButton(

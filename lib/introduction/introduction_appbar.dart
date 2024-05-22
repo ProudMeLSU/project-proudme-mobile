@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constant.dart';
+
 class IntroductionAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Function()? onSignInPressed;
@@ -22,7 +24,7 @@ class IntroductionAppBar extends StatelessWidget implements PreferredSizeWidget 
       backgroundColor: Theme.of(context).primaryColor,
       leading: Padding(
         padding: EdgeInsets.all(8.0),
-        child: Image.asset('assets/proudme_logo_mini.png'),
+        child: Image.asset(miniLogoPath),
       ),
       actions: [
         TextButton(

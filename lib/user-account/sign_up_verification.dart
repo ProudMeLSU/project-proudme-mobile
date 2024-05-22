@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
+import '../language.dart';
+
 class SignUpVerificationScreen extends StatefulWidget {
   final String data;
   final String requiredCode;
@@ -36,7 +38,7 @@ class _SignUpVerificationScreenState extends State<SignUpVerificationScreen> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text('Error'),
-                    content: Text('The confirmation code didn\'t match.'),
+                    content: Text(confirmationErrorMessage),
                     actions: [
                       TextButton(
                         onPressed: () {
@@ -61,7 +63,7 @@ class _SignUpVerificationScreenState extends State<SignUpVerificationScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
-          'ProudMe',
+          projectTitle,
           style: TextStyle(
             color: Color(0xfff5b342),
             fontWeight: FontWeight.bold,
@@ -75,7 +77,7 @@ class _SignUpVerificationScreenState extends State<SignUpVerificationScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Enter the confirmation code sent to your email to confirm your account registration!',
+              confirmationPromptMessage,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

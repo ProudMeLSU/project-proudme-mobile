@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+
 import '../user-account/sign_in.dart';
 import 'introduction_appbar.dart';
 import 'introduction_image_section.dart';
 import '../language.dart';
 import 'introduction_list_section.dart';
 import 'introduction_footer_section.dart';
+import '../constant.dart';
 
 class Introduction extends StatelessWidget {
   const Introduction({super.key});
@@ -12,7 +14,7 @@ class Introduction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Proud Me',
+      title: projectTitle,
       home: Scaffold(
         appBar: IntroductionAppBar(
           title: '',
@@ -37,7 +39,7 @@ class Introduction extends StatelessWidget {
                   introductionStartingText,
                   style: TextStyle(
                     fontSize: 16.0,
-                    fontFamily: 'Montserrat',
+                    fontFamily: fontFamily,
                   ),
                 ),
               ),

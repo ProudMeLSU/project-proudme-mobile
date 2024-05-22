@@ -25,6 +25,17 @@ const List<String> cafeteriaList = [
 ];
 
 const String introductionEndingText1 = 'For questions about the Project ProudMe, please contact Dr. Chen’s lab – the Pedagogical Kinesiology Lab. ';
-const String labEmail = 'pklab@lsu.edu';
 const String introductionEndingText2 = 'If your school is interested in becoming a partnership school, our lab offers small grants as incentives for you to participate. Please contact Dr. Chen. Thank you!';
-const String piEmail = 'senlinchen@lsu.edu';
+
+const String serviceAgreement = 'Agree to terms of service.';
+const String adsAgreement = 'Agree to receive ad updates by email.';
+const String thankYouMessage = 'Thank You for joining ProudMe!';
+const String welcomeMessage = 'Welcome to ProudMe!';
+const String confirmationErrorMessage = 'The confirmation code didn\'t match.';
+
+const String confirmationPromptMessage = 'Enter the confirmation code sent to your email to confirm your account registration!';
+
+const String projectTitle = 'ProudMe';
+
+const String recoverDialogMessage = "Use this toggle button to switch between recover username or reset password functionality.";
+const String recoverResetTitle = "Recover Username/Reset Password";

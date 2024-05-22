@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
+import '../language.dart';
+
 class ForgetCredentialsScreen extends StatefulWidget {
   @override
   _ForgetCredentialsScreenState createState() => _ForgetCredentialsScreenState();
@@ -40,7 +42,7 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
-          'Proud Me',
+          projectTitle,
           style: TextStyle(
             color: Color(0xfff5b342),
             fontWeight: FontWeight.bold,
@@ -53,6 +55,7 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(height: 20),
             Text(
               'Forgot Your Username or Password?',
               style: TextStyle(
@@ -84,8 +87,8 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
                     showDialog(
                       context: context,
                       builder: (_) => AlertDialog(
-                        title: Text("Recover username/Reset password"),
-                        content: Text("Use this toggle button to switch between recover username or reset password functionality."),
+                        title: Text(recoverResetTitle),
+                        content: Text(recoverDialogMessage),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () {
@@ -99,7 +102,6 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
                   },
                   child: Icon(Icons.info),
                 ),
-                Text(_resetPassword ? 'Reset Password' : 'Recover Username'),
               ],
             ),
             SizedBox(height: 20),

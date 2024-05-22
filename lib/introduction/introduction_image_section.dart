@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../language.dart';
+import '../constant.dart';
+
 class IntroductionImageSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -10,13 +13,13 @@ class IntroductionImageSection extends StatelessWidget {
                 AspectRatio(
                   aspectRatio: 16 / 9,
                   child: Image.asset(
-                    'assets/school_kids.png',
+                    schoolKidsPicPath,
                     fit: BoxFit.cover,
                   ),
                 ),
                 Center(
                     child: Text(
-                      'Welcome to ProudMe!',
+                      welcomeMessage,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 36,

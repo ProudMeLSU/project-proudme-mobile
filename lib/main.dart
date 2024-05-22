@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'introduction/introduction.dart';
 
+import 'language.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -11,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Proud Me',
+      title: projectTitle,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurple,

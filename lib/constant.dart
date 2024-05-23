@@ -30,11 +30,11 @@ const List<String> genders = [
 
 const String charSets = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
-const String miniLogoPath = 'assets/proudme_logo_mini.png';
-const String schoolKidsPicPath = 'assets/school_kids.png';
+const String miniLogoPath = 'assets/images/proudme_logo_mini.png';
+const String schoolKidsPicPath = 'assets/images/school_kids.png';
+const String mainLogoPath = 'assets/images/proudme_logo.png';
 
 const String fontFamily = 'Montserrat';
-const String mainLogoPath = 'assets/proudme_logo.png';
 
 const String labEmail = 'pklab@lsu.edu';
 const String piEmail = 'senlinchen@lsu.edu';

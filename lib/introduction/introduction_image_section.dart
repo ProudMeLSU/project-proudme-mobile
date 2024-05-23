@@ -22,8 +22,9 @@ class IntroductionImageSection extends StatelessWidget {
                       welcomeMessage,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 36,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
+                        fontFamily: fontFamily,
                       ),
                     ),
                   ),

@@ -21,7 +21,10 @@ class IntroductionFooterWidget extends StatelessWidget {
         children: [
           Text(
               regularText,
-              style: TextStyle(fontSize: 16.0, fontFamily: fontFamily),
+              style: TextStyle(
+                fontSize: 16.0,
+                fontFamily: fontFamily,
+              ),
           ),
           Center(
             child: ElevatedButton.icon(

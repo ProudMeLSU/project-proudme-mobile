@@ -24,8 +24,8 @@ class TextListWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              fontFamily: fontFamily,
               color: Theme.of(context).primaryColor,
+              fontFamily: fontFamily,
             ),
           ),
         ),
@@ -48,7 +48,10 @@ class TextListWidget extends StatelessWidget {
                 Expanded(
                   child: Text(
                     texts[index],
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: fontFamily
+                      ),
                   ),
                 ),
               ],

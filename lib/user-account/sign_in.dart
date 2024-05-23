@@ -43,6 +43,7 @@ class _SignInScreenState extends State<SignInScreen> {
             style: TextStyle(
               color: Color(0xfff5b342),
               fontWeight: FontWeight.bold,
+              fontFamily: fontFamily,
             ),
           ),
           centerTitle: true,
@@ -82,7 +83,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     Theme.of(context).colorScheme.secondary,
                   ),
                 ),
-                child: Text('Login'),
+                child: Text(
+                  'Login',
+                  style: TextStyle(
+                      fontFamily: fontFamily,
+                    ),
+                  ),
               ),
               SizedBox(height: 10),
               TextButton(
@@ -92,10 +98,20 @@ class _SignInScreenState extends State<SignInScreen> {
                     MaterialPageRoute(builder: (context) => ForgetCredentialsScreen()),
                   );
                 },
-                child: Text('Forgot your Username or Password?'),
+                child: Text(
+                    'Forgot your Username or Password?',
+                    style: TextStyle(
+                      fontFamily: fontFamily,
+                    ),
+                  ),
               ),
               SizedBox(height: 10),
-              Text("Don't have an account?"),
+              Text(
+                "Don't have an account?",
+                style: TextStyle(
+                  fontFamily: fontFamily,
+                ),
+                ),
               TextButton(
                 onPressed: () {
                   Navigator.push(
@@ -103,7 +119,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     MaterialPageRoute(builder: (context) => SignUpScreen()),
                   );
                 },
-                child: Text('Register Here'),
+                child: Text(
+                  'Register Here',
+                  style: TextStyle(
+                      fontFamily: fontFamily,
+                    ),
+                  ),
               ),
             ],
           ),

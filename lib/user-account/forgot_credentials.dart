@@ -108,11 +108,23 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
-                  Theme.of(context).colorScheme.secondary,
+                  Color(0xfff5b342),
                 ),
               ),
               onPressed: allFieldsFilled ? handleAction : null,
-              child: _resetPassword ? Text('Reset Password') : Text('Recover Username'),
+              child: _resetPassword ?
+              Text(
+                'Reset Password',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                )
+              ) :
+              Text(
+                'Recover Username',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                )
+                ),
             ),
           ],
         ),

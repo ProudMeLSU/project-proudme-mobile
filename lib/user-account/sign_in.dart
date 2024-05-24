@@ -80,13 +80,14 @@ class _SignInScreenState extends State<SignInScreen> {
                 onPressed: allFieldsFilled ? handleLogin : null,
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
-                    Theme.of(context).colorScheme.secondary,
+                    Color(0xfff5b342)
                   ),
                 ),
                 child: Text(
                   'Login',
                   style: TextStyle(
                       fontFamily: fontFamily,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
               ),

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../user-account/sign_in.dart';
-import 'introduction_appbar.dart';
 import 'introduction_image_section.dart';
 import '../language.dart';
 import 'introduction_list_section.dart';
 import 'introduction_footer_section.dart';
 import '../constant.dart';
+import '../widgets/app_drawer.dart';
 
 class Introduction extends StatelessWidget {
+  final bool isSignedIn = true;
+
   const Introduction({super.key});
 
   @override
@@ -16,18 +18,36 @@ class Introduction extends StatelessWidget {
     return MaterialApp(
       title: projectTitle,
       home: Scaffold(
-        appBar: IntroductionAppBar(
-          title: '',
-          onSignInPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SignInScreen()),
-            );
-          },
-          onPressed: () {
-
-          }
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Color(0xfff5b342)),
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Text(
+                projectTitle,
+                style: TextStyle(
+                  color: Color(0xfff5b342),
+                  fontWeight: FontWeight.bold,
+                  fontFamily: fontFamily,
+                ),
+          ),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: isSignedIn ?
+              () {} :
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignInScreen()),
+                );
+              },
+              icon: Icon(
+                isSignedIn ? Icons.logout : Icons.person,
+                color: Color(0xfff5b342),
+              ),
+            ),
+          ],
         ),
+        drawer: isSignedIn ? MyDrawer() : null,
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

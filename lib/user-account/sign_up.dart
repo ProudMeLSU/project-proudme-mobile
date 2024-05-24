@@ -196,10 +196,15 @@ Map<String, dynamic> formData = {
               onPressed: allFieldsFilled ? handleRegister : null,
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
-                    Theme.of(context).colorScheme.secondary,
+                    Color(0xfff5b342),
                   ),
               ),
-              child: Text('Register'),
+              child: Text(
+                'Register',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold
+                )
+                ),
             ),
           ],
         ),

@@ -94,10 +94,15 @@ class _SignUpVerificationScreenState extends State<SignUpVerificationScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: allFieldsFilled ? handleConfirm : null,
-              child: Text('Confirm'),
+              child: Text(
+                'Confirm',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold
+                )
+                ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
-                  Theme.of(context).colorScheme.secondary,
+                  Color(0xfff5b342)
                 ),
               ),
             ),

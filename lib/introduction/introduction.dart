@@ -9,7 +9,7 @@ import '../constant.dart';
 import '../widgets/app_drawer.dart';
 
 class Introduction extends StatelessWidget {
-  final bool isSignedIn = true;
+  final bool isSignedIn = false;
 
   const Introduction({super.key});
 

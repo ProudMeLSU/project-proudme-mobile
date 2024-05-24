@@ -77,6 +77,7 @@ Map<String, dynamic> formData = {
             style: TextStyle(
               color: Color(0xfff5b342),
               fontWeight: FontWeight.bold,
+              fontFamily: fontFamily
             ),
           ),
           centerTitle: true,
@@ -94,6 +95,7 @@ Map<String, dynamic> formData = {
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
+                fontFamily: fontFamily
               ),
               textAlign: TextAlign.center,
             ),
@@ -178,7 +180,12 @@ Map<String, dynamic> formData = {
                     updateFormData('agreeToTerms', value);
                   },
                 ),
-                Text(serviceAgreement),
+                Text(
+                  serviceAgreement,
+                  style: TextStyle(
+                    fontFamily: fontFamily
+                  )
+                ),
               ],
             ),
             Row(
@@ -189,7 +196,12 @@ Map<String, dynamic> formData = {
                     updateFormData('agreeToAdUpdates', value);
                   },
                 ),
-                Text(adsAgreement),
+                Text(
+                  adsAgreement,
+                  style: TextStyle(
+                    fontFamily: fontFamily
+                  )
+                ),
               ],
             ),
             ElevatedButton(
@@ -202,9 +214,10 @@ Map<String, dynamic> formData = {
               child: Text(
                 'Register',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.bold,
+                  fontFamily: fontFamily
                 )
-                ),
+              ),
             ),
           ],
         ),

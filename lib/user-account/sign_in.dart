@@ -27,9 +27,21 @@ class _SignInScreenState extends State<SignInScreen> {
     });
   }
 
-  void handleLogin() {
+  void handleLogin(BuildContext context) {
     String jsonData = jsonEncode(formData);
     print(jsonData);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'API integration hasn\'t been implemented yet!',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: fontFamily,
+          ),
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+      )
+    );
   }
 
   @override
@@ -48,7 +60,32 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
+        body: BodyElement(
+          handleLogin: handleLogin,
+          updateFormData: updateFormData,
+          allFieldsFilled: allFieldsFilled
+        )
+      ),
+      debugShowCheckedModeBanner: false,
+
+    );
+  }
+}
+
+class BodyElement extends StatelessWidget {
+  final bool allFieldsFilled;
+  final Function(BuildContext) handleLogin;
+  final Function(String, dynamic) updateFormData;
+
+    const BodyElement({
+      Key? key,
+      required this.handleLogin,
+      required this.updateFormData,
+      required this.allFieldsFilled
+  }) : super(key: key);
+
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -77,7 +114,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: allFieldsFilled ? handleLogin : null,
+                onPressed: allFieldsFilled ? () => handleLogin(context) : null,
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                     Color(0xfff5b342)
@@ -129,10 +166,6 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             ],
           ),
-        ),
-      ),
-      debugShowCheckedModeBanner: false,
-
-    );
+        );
   }
 }

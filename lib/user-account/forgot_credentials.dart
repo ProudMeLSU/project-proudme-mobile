@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 import '../language.dart';
-import '../constant.dart';
 
 class ForgetCredentialsScreen extends StatefulWidget {
   @override
@@ -47,7 +46,6 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
           style: TextStyle(
             color: Color(0xfff5b342),
             fontWeight: FontWeight.bold,
-            fontFamily: fontFamily
           ),
         ),
         centerTitle: true,
@@ -63,7 +61,6 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
               style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
-                fontFamily: fontFamily
               ),
               textAlign: TextAlign.center,
             ),
@@ -120,16 +117,14 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
                 'Reset Password',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontFamily: fontFamily
                 )
               ) :
               Text(
                 'Recover Username',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontFamily: fontFamily
                 )
-              ),
+                ),
             ),
           ],
         ),

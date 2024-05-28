@@ -21,7 +21,7 @@ class IntroductionFooterWidget extends StatelessWidget {
         children: [
           Text(
               regularText,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16.0,
                 fontFamily: fontFamily,
               ),
@@ -36,8 +36,8 @@ class IntroductionFooterWidget extends StatelessWidget {
                   //Log error
                 }
               },
-              icon: Icon(Icons.email),
-              label: Text('$clickableText'),
+              icon: const Icon(Icons.email),
+              label: Text(clickableText),
             ),
           ),
         ],

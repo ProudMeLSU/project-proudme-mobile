@@ -7,8 +7,7 @@ class IntroductionImageSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return 
-    Container(
-            child: Stack(
+        Stack(
               children: [
                 AspectRatio(
                   aspectRatio: 16 / 9,
@@ -17,7 +16,7 @@ class IntroductionImageSection extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Center(
+                const Center(
                     child: Text(
                       welcomeMessage,
                       style: TextStyle(
@@ -29,7 +28,6 @@ class IntroductionImageSection extends StatelessWidget {
                     ),
                   ),
               ],
-            )  
-    );
+            );
   }
 }

@@ -18,7 +18,7 @@ class TextListWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             title,
             style: TextStyle(
@@ -32,13 +32,13 @@ class TextListWidget extends StatelessWidget {
         ...List.generate(
           texts.length,
           (index) => Padding(
-            padding: EdgeInsets.symmetric(vertical: 4.0),
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(right: 8.0, top: 4.0),
+                  padding: const EdgeInsets.only(right: 8.0, top: 4.0),
                   child: Icon(
                     Icons.circle,
                     size: 10,
@@ -48,7 +48,7 @@ class TextListWidget extends StatelessWidget {
                 Expanded(
                   child: Text(
                     texts[index],
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontFamily: fontFamily
                       ),
@@ -58,7 +58,7 @@ class TextListWidget extends StatelessWidget {
             ),
           ),
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }

@@ -41,7 +41,7 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text(
+        title: const Text(
           projectTitle,
           style: TextStyle(
             color: Color(0xfff5b342),
@@ -55,8 +55,8 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Forgot Your Username or Password?',
               style: TextStyle(
                 fontSize: 24.0,
@@ -64,14 +64,14 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Enter Email',
               ),
               onChanged: (value) => updateFormData('email', value),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               children: <Widget>[
                 Switch(
@@ -87,39 +87,39 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
                     showDialog(
                       context: context,
                       builder: (_) => AlertDialog(
-                        title: Text(recoverResetTitle),
-                        content: Text(recoverDialogMessage),
+                        title: const Text(recoverResetTitle),
+                        content: const Text(recoverDialogMessage),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text('OK'),
+                            child: const Text('OK'),
                           ),
                         ],
                       ),
                     );
                   },
-                  child: Icon(Icons.info),
+                  child: const Icon(Icons.info),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
-                  Color(0xfff5b342),
+                  const Color(0xfff5b342),
                 ),
               ),
               onPressed: allFieldsFilled ? handleAction : null,
               child: _resetPassword ?
-              Text(
+              const Text(
                 'Reset Password',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 )
               ) :
-              Text(
+              const Text(
                 'Recover Username',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,

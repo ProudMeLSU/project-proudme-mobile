@@ -12,7 +12,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-Map<String, dynamic> formData = {
+final Map<String, dynamic> _formData = {
     'email': '',
     'password': '',
     'confirmPassword': '',
@@ -38,24 +38,24 @@ Map<String, dynamic> formData = {
 
   void updateFormData(String field, dynamic value) {
     setState(() {
-      formData[field] = value;
+      _formData[field] = value;
 
-      allFieldsFilled = formData.values.every((element) => element != '');
+      allFieldsFilled = _formData.values.every((element) => element != '');
     });
   }
 
   Map<String, dynamic> getEmailParameters(String code) {
     Map<String, dynamic> emailParameters = {
       'subject': 'Project ProudMe Registration Confirmation',
-      'to': formData['email'],
-      'text': 'Hi ${formData['name']},\n\nYou are receiving this email because you recently registered a new account on the Project ProudMe webpage. \n\nEnter the confirmation code listed to confirm your email account: ${code}\n\nBest Regards, \nProject ProudMe Team \nLouisiana State University \nPedagogical Kinesiology Lab\n\n---\nThis email was sent from an account associated with Louisiana State University.',
+      'to': _formData['email'],
+      'text': 'Hi ${_formData['name']},\n\nYou are receiving this email because you recently registered a new account on the Project ProudMe webpage. \n\nEnter the confirmation code listed to confirm your email account: ${code}\n\nBest Regards, \nProject ProudMe Team \nLouisiana State University \nPedagogical Kinesiology Lab\n\n---\nThis email was sent from an account associated with Louisiana State University.',
     };
 
     return emailParameters;
   }
 
   void handleRegister() {
-    String jsonData = jsonEncode(formData);
+    String jsonData = jsonEncode(_formData);
     String requiredCode = generateRandomString(8);
     
     Map<String, dynamic> emailParameters = getEmailParameters(requiredCode);
@@ -72,7 +72,7 @@ Map<String, dynamic> formData = {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
-          title: Text(
+          title: const Text(
             projectTitle,
             style: TextStyle(
               color: Color(0xfff5b342),
@@ -82,14 +82,14 @@ Map<String, dynamic> formData = {
           centerTitle: true,
         ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Image.asset(mainLogoPath),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               thankYouMessage,
               style: TextStyle(
                 fontSize: 24.0,
@@ -97,35 +97,35 @@ Map<String, dynamic> formData = {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Username'),
+              decoration: const InputDecoration(labelText: 'Username'),
               onChanged: (value) => updateFormData('name', value),
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: const InputDecoration(labelText: 'Password'),
               onChanged: (value) => updateFormData('password', value),
               obscureText: true,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Confirm Password'),
+              decoration: const InputDecoration(labelText: 'Confirm Password'),
               onChanged: (value) => updateFormData('confirmPassword', value),
               obscureText: true,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'First Name'),
+              decoration: const InputDecoration(labelText: 'First Name'),
               onChanged: (value) => updateFormData('firstName', value),
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Last Name'),
+              decoration: const InputDecoration(labelText: 'Last Name'),
               onChanged: (value) => updateFormData('lastName', value),
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'School Attending'),
+              decoration: const InputDecoration(labelText: 'School Attending'),
               onChanged: (value) => updateFormData('schoolName', value),
             ),
             DropdownButtonFormField<String>(
-              decoration: InputDecoration(labelText: 'Birth Month'),
+              decoration: const InputDecoration(labelText: 'Birth Month'),
               onChanged: (value) => updateFormData('birthMonth', value),
               items: months.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
@@ -135,7 +135,7 @@ Map<String, dynamic> formData = {
               }).toList(),
             ),
             DropdownButtonFormField<int>(
-              decoration: InputDecoration(labelText: 'Birth Year'),
+              decoration: const InputDecoration(labelText: 'Birth Year'),
               onChanged: (value) => updateFormData('birthYear', value),
               items: List.generate(
                 11,
@@ -146,7 +146,7 @@ Map<String, dynamic> formData = {
               ),
             ),
             DropdownButtonFormField<String>(
-              decoration: InputDecoration(labelText: 'Grade Level'),
+              decoration: const InputDecoration(labelText: 'Grade Level'),
               onChanged: (value) => updateFormData('gradeLevel', value),
               items: grades.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
@@ -156,7 +156,7 @@ Map<String, dynamic> formData = {
               }).toList(),
             ),
             DropdownButtonFormField<String>(
-              decoration: InputDecoration(labelText: 'Gender'),
+              decoration: const InputDecoration(labelText: 'Gender'),
               onChanged: (value) => updateFormData('gender', value),
               items: genders.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
@@ -166,40 +166,40 @@ Map<String, dynamic> formData = {
               }).toList(),
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Email Address'),
+              decoration: const InputDecoration(labelText: 'Email Address'),
               keyboardType: TextInputType.emailAddress,
               onChanged: (value) => updateFormData('email', value),
             ),
             Row(
               children: [
                 Checkbox(
-                  value: formData['agreeToTerms'],
+                  value: _formData['agreeToTerms'],
                   onChanged: (bool? value) {
                     updateFormData('agreeToTerms', value);
                   },
                 ),
-                Text(serviceAgreement),
+                const Text(serviceAgreement),
               ],
             ),
             Row(
               children: [
                 Checkbox(
-                  value: formData['agreeToAdUpdates'],
+                  value: _formData['agreeToAdUpdates'],
                   onChanged: (bool? value) {
                     updateFormData('agreeToAdUpdates', value);
                   },
                 ),
-                Text(adsAgreement),
+                const Text(adsAgreement),
               ],
             ),
             ElevatedButton(
               onPressed: allFieldsFilled ? handleRegister : null,
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
-                    Color(0xfff5b342),
+                    const Color(0xfff5b342),
                   ),
               ),
-              child: Text(
+              child: const Text(
                 'Register',
                 style: TextStyle(
                   fontWeight: FontWeight.bold

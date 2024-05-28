@@ -18,7 +18,7 @@ class SignUpVerificationScreen extends StatefulWidget {
 }
 
 class _SignUpVerificationScreenState extends State<SignUpVerificationScreen> {
-  Map<String, dynamic> formData = {
+  final Map<String, dynamic> _formData = {
     'code': '',
   };
 
@@ -26,25 +26,25 @@ class _SignUpVerificationScreenState extends State<SignUpVerificationScreen> {
 
   void updateFormData(String field, dynamic value) {
     setState(() {
-      formData[field] = value;
-      allFieldsFilled = formData.values.every((element) => element != '');
+      _formData[field] = value;
+      allFieldsFilled = _formData.values.every((element) => element != '');
     });
   }
 
   void handleConfirm() {
-    if (widget.requiredCode != formData['code']) {
+    if (widget.requiredCode != _formData['code']) {
        showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text('Error'),
-                    content: Text(confirmationErrorMessage),
+                    title: const Text('Error'),
+                    content: const Text(confirmationErrorMessage),
                     actions: [
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text('OK'),
+                        child: const Text('OK'),
                       ),
                     ],
                   );
@@ -62,7 +62,7 @@ class _SignUpVerificationScreenState extends State<SignUpVerificationScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text(
+        title: const Text(
           projectTitle,
           style: TextStyle(
             color: Color(0xfff5b342),
@@ -76,7 +76,7 @@ class _SignUpVerificationScreenState extends State<SignUpVerificationScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               confirmationPromptMessage,
               style: TextStyle(
                 fontSize: 24,
@@ -84,27 +84,27 @@ class _SignUpVerificationScreenState extends State<SignUpVerificationScreen> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Confirmation Code',
               ),
               onChanged: (value) => updateFormData('code', value),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: allFieldsFilled ? handleConfirm : null,
-              child: Text(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  const Color(0xfff5b342)
+                ),
+              ),
+              child: const Text(
                 'Confirm',
                 style: TextStyle(
                   fontWeight: FontWeight.bold
                 )
                 ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  Color(0xfff5b342)
-                ),
-              ),
             ),
           ],
         ),

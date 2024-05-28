@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:project_proud_me/introduction/introduction.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'sign_up.dart';
 import 'forgot_credentials.dart';
 import '../constant.dart';
 import '../language.dart';
+import '../endpoints.dart';
+import '../widgets/toast.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -12,33 +18,68 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  Map<String, dynamic> formData = {
+  final Map<String, dynamic> _formData = {
     'email': '',
     'password': '',
   };
 
-  bool allFieldsFilled = false;
+  bool _allFieldsFilled = false;
+  bool _isLoading = false;
 
   void updateFormData(String field, dynamic value) {
     setState(() {
-      formData[field] = value;
+      _formData[field] = value;
 
-      allFieldsFilled = formData.values.every((element) => element != '');
+      _allFieldsFilled = _formData.values.every((element) => element != '');
     });
   }
 
-  void handleLogin() {
-    String jsonData = jsonEncode(formData);
-    print(jsonData);
+void handleLogin() async {
+  setState(() {
+    _isLoading = true;
+  });
+
+  try {
+    String jsonData = jsonEncode(_formData);
+    var response = await http.post(
+      Uri.parse(login),
+      body: jsonData,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString(authTokenKey, response.body);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Introduction()),
+      );
+    } else if (response.statusCode == 401) {
+      showCustomToast(context, invalidCredentials);
+    }
+  } catch (e) {
+    showCustomToast(context, e.toString());
+  } finally {
+    setState(() {
+      _isLoading = false;
+    });
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
+      home: _isLoading ?
+        const Center(
+          child: CircularProgressIndicator(),
+        ) :
+        Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).primaryColor,
-          title: Text(
+          title:const Text(
             projectTitle,
             style: TextStyle(
               color: Color(0xfff5b342),
@@ -52,38 +93,38 @@ class _SignInScreenState extends State<SignInScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Image.asset(mainLogoPath),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Username/Email',
                   ),
                   onChanged: (value) => updateFormData('email', value),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
                   obscureText: true,
                   onChanged: (value) => updateFormData('password', value),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Password',
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: allFieldsFilled ? handleLogin : null,
+                onPressed: _allFieldsFilled ? handleLogin : null,
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
-                    Color(0xfff5b342)
+                    const Color(0xfff5b342)
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Login',
                   style: TextStyle(
                       fontFamily: fontFamily,
@@ -91,7 +132,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextButton(
                 onPressed: () {
                   Navigator.push(
@@ -99,15 +140,15 @@ class _SignInScreenState extends State<SignInScreen> {
                     MaterialPageRoute(builder: (context) => ForgetCredentialsScreen()),
                   );
                 },
-                child: Text(
+                child: const Text(
                     'Forgot your Username or Password?',
                     style: TextStyle(
                       fontFamily: fontFamily,
                     ),
                   ),
               ),
-              SizedBox(height: 10),
-              Text(
+              const SizedBox(height: 10),
+              const Text(
                 "Don't have an account?",
                 style: TextStyle(
                   fontFamily: fontFamily,
@@ -120,7 +161,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     MaterialPageRoute(builder: (context) => SignUpScreen()),
                   );
                 },
-                child: Text(
+                child: const Text(
                   'Register Here',
                   style: TextStyle(
                       fontFamily: fontFamily,

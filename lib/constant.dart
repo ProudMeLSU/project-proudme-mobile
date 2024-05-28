@@ -38,3 +38,6 @@ const String fontFamily = 'Montserrat';
 
 const String labEmail = 'pklab@lsu.edu';
 const String piEmail = 'senlinchen@lsu.edu';
+
+const String authTokenKey = 'authToken';
+const String userDataKey = 'userData';

@@ -33,39 +33,45 @@ class _SignInScreenState extends State<SignInScreen> {
     });
   }
 
-void handleLogin() async {
-  setState(() {
-    _isLoading = true;
-  });
-
-  try {
-    String jsonData = jsonEncode(_formData);
-    var response = await http.post(
-      Uri.parse(login),
-      body: jsonData,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString(authTokenKey, response.body);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Introduction()),
-      );
-    } else if (response.statusCode == 401) {
-      showCustomToast(context, invalidCredentials);
-    }
-  } catch (e) {
-    showCustomToast(context, e.toString());
-  } finally {
-    setState(() {
-      _isLoading = false;
-    });
+  void resetForm() {
+    String value = '';
+    _formData.keys.forEach((element) => updateFormData(element, value));
   }
-}
+
+  void handleLogin() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      String jsonData = jsonEncode(_formData);
+      var response = await http.post(
+        Uri.parse(login),
+        body: jsonData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString(authTokenKey, response.body);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Introduction()),
+        );
+      } else if (response.statusCode == 401) {
+        showCustomToast(context, invalidCredentials);
+      }
+    } catch (e) {
+      showCustomToast(context, e.toString());
+    } finally {
+      resetForm();
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
 
   @override

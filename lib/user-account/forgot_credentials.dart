@@ -10,22 +10,25 @@ class ForgetCredentialsScreen extends StatefulWidget {
 
 class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
   bool _resetPassword = true;
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   Map<String, dynamic> formData = {
     'email': '',
   };
 
-  bool allFieldsFilled = false;
-
   void updateFormData(String field, dynamic value) {
     setState(() {
       formData[field] = value;
-
-      allFieldsFilled = formData.values.every((element) => element != '');
     });
   }
 
   void handleAction() {
+    if (!_formKey.currentState!.validate()) {
+      // Invalid!
+      return;
+    }
+    _formKey.currentState!.save();
+
     String jsonData = jsonEncode(formData);
     print(jsonData);
 
@@ -52,7 +55,9 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
+        child: Form(
+          key: _formKey,
+          child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 20),
@@ -65,11 +70,17 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
-            TextField(
+            TextFormField(
               decoration: const InputDecoration(
                 labelText: 'Enter Email',
               ),
-              onChanged: (value) => updateFormData('email', value),
+              onSaved: (value) => updateFormData('email', value),
+              validator: (value) {
+                    if (value == null || value.isEmpty || !value.contains('@')) {
+                      return invalidorEmptyEmail;
+                    }
+                    return null;
+                  },
             ),
             const SizedBox(height: 20),
             Row(
@@ -111,7 +122,7 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
                   const Color(0xfff5b342),
                 ),
               ),
-              onPressed: allFieldsFilled ? handleAction : null,
+              onPressed: handleAction,
               child: _resetPassword ?
               const Text(
                 'Reset Password',
@@ -127,6 +138,7 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
                 ),
             ),
           ],
+        ),
         ),
       ),
     );

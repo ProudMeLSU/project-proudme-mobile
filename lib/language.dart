@@ -37,6 +37,7 @@ const String confirmationPromptMessage = 'Enter the confirmation code sent to yo
 
 const String projectTitle = 'ProudMe';
 
-const String recoverDialogMessage = "Use this toggle button to switch between recover username or reset password functionality.";
-const String recoverResetTitle = "Recover Username/Reset Password";
+const String recoverDialogMessage = 'Use this toggle button to switch between recover username or reset password functionality.';
+const String recoverResetTitle = 'Recover Username/Reset Password';
 const String invalidCredentials = 'Invalid Credentials! Please try again.';
+const String invalidorEmptyEmail = 'Invalid or empty email!';

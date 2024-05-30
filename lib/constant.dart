@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart' show Color;
+
 const List<String> months = [
                 'January',
                 'February',
@@ -41,3 +43,5 @@ const String piEmail = 'senlinchen@lsu.edu';
 
 const String authTokenKey = 'authToken';
 const String userDataKey = 'userData';
+
+const Color errorColor = Color.fromRGBO(255, 0, 0, 0.8);

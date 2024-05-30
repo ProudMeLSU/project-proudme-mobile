@@ -61,10 +61,10 @@ class _SignInScreenState extends State<SignInScreen> {
           MaterialPageRoute(builder: (context) => Introduction()),
         );
       } else if (response.statusCode == 401) {
-        showCustomToast(context, invalidCredentials);
+        showCustomToast(context, invalidCredentials, errorColor);
       }
     } catch (e) {
-      showCustomToast(context, e.toString());
+      showCustomToast(context, e.toString(), errorColor);
     } finally {
       resetForm();
       setState(() {

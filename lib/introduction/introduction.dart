@@ -118,7 +118,7 @@ class _IntroductionState extends State<Introduction> {
                 () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SignInScreen()),
+                    MaterialPageRoute(builder: (context) => SignInScreen(redirectionFromVerificationScreen: false,)),
                   );
                 },
                 icon: Icon(

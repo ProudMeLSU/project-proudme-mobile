@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:project_proud_me/user-account/sign_in.dart';
+import 'dart:async';
 
 import '../language.dart';
+import '../widgets/toast.dart';
+import '../endpoints.dart';
+import '../constant.dart';
 
 class SignUpVerificationScreen extends StatefulWidget {
   final String data;
@@ -21,12 +27,13 @@ class _SignUpVerificationScreenState extends State<SignUpVerificationScreen> {
     'code': '',
   };
 
-  bool allFieldsFilled = false;
+  bool _allFieldsFilled = false;
+  bool _isLoading = false;
 
   void updateFormData(String field, dynamic value) {
     setState(() {
       _formData[field] = value;
-      allFieldsFilled = _formData.values.every((element) => element != '');
+      _allFieldsFilled = _formData.values.every((element) => element != '');
     });
   }
 
@@ -53,12 +60,69 @@ class _SignUpVerificationScreenState extends State<SignUpVerificationScreen> {
       return;
     }
 
-    // Send an API request to signup with widget.data
+    registerUser(widget.data);
+  }
+
+    Future<void> registerUser(String jsonData) async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      var response = await http.post(
+        Uri.parse(signUp),
+        body: jsonData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      int code = response.statusCode;
+
+      if (code == 200) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SignInScreen(redirectionFromVerificationScreen: true,)),
+        );
+      }  else if (code == 400 || code == 500) {
+        showCustomToast(
+          context, 
+          userRegistrationUnsuccessful, 
+          errorColor
+          );
+      }
+    } catch (e) {
+      showCustomToast(context, e.toString(), errorColor);
+    } finally {
+      resetForm();
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void resetForm() {
+    String value = '';
+    _formData.keys.forEach((element) => updateFormData(element, value));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    showCustomToast(
+      context, 
+      emailSentMessage, 
+      Theme.of(context).primaryColor
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isLoading ?
+    const Center(
+      child: CircularProgressIndicator()
+    ) :
+    Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: const Text(
@@ -92,7 +156,7 @@ class _SignUpVerificationScreenState extends State<SignUpVerificationScreen> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: allFieldsFilled ? handleConfirm : null,
+              onPressed: _allFieldsFilled ? handleConfirm : null,
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(
                   const Color(0xfff5b342)

@@ -1,3 +1,6 @@
-const String users = 'https://project-proudme.onrender.com/users';
-const String login = 'https://project-proudme.onrender.com/login';
-const String user = 'https://project-proudme.onrender.com/user';
+const String baseUrl = 'https://project-proudme.onrender.com';
+const String users = '$baseUrl/users';
+const String login = '$baseUrl/login';
+const String user = '$baseUrl/user';
+const String sendEmail = '$baseUrl/send-email';
+const String signUp = '$baseUrl/signup';

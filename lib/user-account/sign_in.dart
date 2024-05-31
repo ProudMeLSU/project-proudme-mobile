@@ -12,6 +12,13 @@ import '../endpoints.dart';
 import '../widgets/toast.dart';
 
 class SignInScreen extends StatefulWidget {
+  final bool redirectionFromVerificationScreen;
+
+  SignInScreen({
+    Key? key,
+    required this.redirectionFromVerificationScreen,
+  }) : super(key: key);
+
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }
@@ -73,6 +80,17 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (widget.redirectionFromVerificationScreen) {
+      showCustomToast(
+        context, 
+        userRegistrationSuccessful, 
+        Theme.of(context).primaryColor
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

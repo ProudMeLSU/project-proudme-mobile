@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 import '../constant.dart';
+import '../journal/my_journal.dart';
 
 class MyDrawer extends StatefulWidget {
 
@@ -74,6 +75,10 @@ class _MyDrawerState extends State<MyDrawer> {
               )
             ),
             onTap: () {
+              Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyJournalScreen()),
+              );
             },
           ),
           ListTile(

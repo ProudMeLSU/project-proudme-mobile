@@ -45,3 +45,29 @@ const String authTokenKey = 'authToken';
 const String userDataKey = 'userData';
 
 const Color errorColor = Color.fromRGBO(255, 0, 0, 0.8);
+const List<String> myJournalItems = ['Physical Activity', 'Screen Time', 'Fruits & Vegetables', 'Sleep'];
+const secondaryColor = Color(0xfff5b342);
+
+const Map<String, List<String>> activityTypes = {
+    'Strenuous': [
+                'Running',
+                'Jogging',
+                'Football',
+                'Soccer',
+                'BasketBall'
+              ],
+    'Moderate': [
+                'Baseball',
+                'Tennis',
+                'Fast Walking',
+                'Volleyball',
+                'Badminton'
+              ],
+    'Mild': [
+            'Yoga',
+            'Archery',
+            'Bowling',
+            'Golf',
+            'Easy Walking'
+          ]
+  };

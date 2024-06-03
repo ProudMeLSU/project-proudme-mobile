@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:project_proud_me/utils/logout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../user-account/sign_in.dart';
@@ -106,9 +107,8 @@ class _IntroductionState extends State<Introduction> {
                   setState(() {
                     _isLoading = true;
                   });
-                  SharedPreferences prefs = await SharedPreferences.getInstance();
-                  await prefs.remove(authTokenKey);
-                  await prefs.remove(userDataKey);
+                  
+                  logout();
 
                   setState(() {
                     _isSignedIn = false;

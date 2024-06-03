@@ -49,3 +49,4 @@ const String invalidEmail = 'Invalid email. Provide a valid email address.';
 const String emailSentMessage = 'A confirmation code has been sent to your email. Please check your email.';
 const String userRegistrationUnsuccessful = 'User couldn\'t be registered. Please try again.';
 const String userRegistrationSuccessful = 'User was successfully registered. Please Sign In using the credentials!';
+const String activityInfo = 'Exercise, do chores, play sports, and go out and do other physical activities. \nRecommended Level: 60 minutes/day.';

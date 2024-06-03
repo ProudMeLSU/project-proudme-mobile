@@ -1,0 +1,9 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../constant.dart';
+
+Future<void> logout() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.remove(authTokenKey);
+  await prefs.remove(userDataKey);
+}

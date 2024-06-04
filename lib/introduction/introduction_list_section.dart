@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../constant.dart';
+import 'package:project_proud_me/constant.dart';
 
 class TextListWidget extends StatelessWidget {
   final String title;

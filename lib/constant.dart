@@ -35,6 +35,7 @@ const String charSets = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012
 const String miniLogoPath = 'assets/images/proudme_logo_mini.png';
 const String schoolKidsPicPath = 'assets/images/school_kids.png';
 const String mainLogoPath = 'assets/images/proudme_logo.png';
+const String appleIconPath = 'assets/icons/apple.svg';
 
 const String fontFamily = 'Montserrat';
 
@@ -54,7 +55,7 @@ const Map<String, List<String>> activityTypes = {
                 'Jogging',
                 'Football',
                 'Soccer',
-                'BasketBall'
+                'Basketball'
               ],
     'Moderate': [
                 'Baseball',
@@ -71,3 +72,5 @@ const Map<String, List<String>> activityTypes = {
             'Easy Walking'
           ]
   };
+
+  const List<String> screenTimeType = ['Academic', 'Non-Academic'];

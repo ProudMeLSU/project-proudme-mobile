@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:project_proud_me/constant.dart';
 import 'package:project_proud_me/language.dart';
 
-class ActivityCard extends StatefulWidget {
+class ScreenTimeCard extends StatefulWidget {
   @override
-  _ActivityCardState createState() => _ActivityCardState();
+  _ScreenTimeCardState createState() => _ScreenTimeCardState();
 }
 
-class _ActivityCardState extends State<ActivityCard> {
-  String _selectedActivityType = '';
-  List<String> _dependentItems = [];
+class _ScreenTimeCardState extends State<ScreenTimeCard> {
+  String _selectedScreenTimeType = '';
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class _ActivityCardState extends State<ActivityCard> {
                         child: Column(
                           children: [
                             Text(
-                              'Activity Type',
+                              'Screen Time Type',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 20,
@@ -49,29 +48,13 @@ class _ActivityCardState extends State<ActivityCard> {
                             ),
                             DropdownButtonFormField<String>(
                               decoration: const InputDecoration(
-                                  labelText: 'Select activity category.'),
+                                  labelText: 'Select screen time type.'),
                               onChanged: (value) {
                                 setState(() {
-                                  _selectedActivityType =
-                                      activityTypes[value!]!.first;
-                                  _dependentItems = activityTypes[value!] ?? [];
+                                  _selectedScreenTimeType = value!;
                                 });
                               },
-                              items: activityTypes.keys
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                            DropdownButtonFormField<String>(
-                              decoration: const InputDecoration(
-                                  labelText: 'Select activity type.'),
-                              onChanged: (value) {},
-                              value: _selectedActivityType,
-                              items: _dependentItems
+                              items: screenTimeType
                                   .map<DropdownMenuItem<String>>(
                                       (String value) {
                                 return DropdownMenuItem<String>(
@@ -286,11 +269,14 @@ class _ActivityCardState extends State<ActivityCard> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(
-                          Icons.directions_run,
+                          Icons.desktop_windows_outlined,
                           color: secondaryColor,
                         ),
+                        const SizedBox(
+                          width: 5,
+                        ),
                         Text(
-                          myJournalItems[0],
+                          myJournalItems[1],
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -307,14 +293,9 @@ class _ActivityCardState extends State<ActivityCard> {
                             showDialog(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: Text(
-                                  myJournalItems[0],
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                ),
+                                title: Text(myJournalItems[1]),
                                 content: const Text(
-                                  activityInfo,
+                                  screenTimeInfo,
                                   style: TextStyle(
                                     fontSize: 20,
                                   ),

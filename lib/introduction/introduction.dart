@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:project_proud_me/constant.dart';
+import 'package:project_proud_me/endpoints.dart';
+import 'package:project_proud_me/introduction/introduction_footer_section.dart';
+import 'package:project_proud_me/introduction/introduction_image_section.dart';
+import 'package:project_proud_me/introduction/introduction_list_section.dart';
+import 'package:project_proud_me/language.dart';
+import 'package:project_proud_me/user-account/sign_in.dart';
 import 'package:project_proud_me/utils/logout.dart';
+import 'package:project_proud_me/widgets/app_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../user-account/sign_in.dart';
-import 'introduction_image_section.dart';
-import '../language.dart';
-import 'introduction_list_section.dart';
-import 'introduction_footer_section.dart';
-import '../constant.dart';
-import '../widgets/app_drawer.dart';
-import '../endpoints.dart';
 
 class Introduction extends StatefulWidget {
 

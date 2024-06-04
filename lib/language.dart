@@ -50,3 +50,6 @@ const String emailSentMessage = 'A confirmation code has been sent to your email
 const String userRegistrationUnsuccessful = 'User couldn\'t be registered. Please try again.';
 const String userRegistrationSuccessful = 'User was successfully registered. Please Sign In using the credentials!';
 const String activityInfo = 'Exercise, do chores, play sports, and go out and do other physical activities. \nRecommended Level: 60 minutes/day.';
+const String screenTimeInfo = 'Limit time using phones, laptops, and other screens every day. The only goal where a lower behavior value is better! \nRecommended Level: < 2 hours (120 minutes)/day';
+const String fruitsVegetablesInfo = 'Eat more servings of fruits and vegetables for a healthier diet. \nRecommended Level: 5 servings/day';
+const String sleepInfo = 'Get a good night\'s rest to be productive and healthy. \nRecommended Level: 9-11 hours/night';

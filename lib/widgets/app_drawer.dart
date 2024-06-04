@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-
-import '../constant.dart';
-import '../journal/my_journal.dart';
+import 'package:flutter/material.dart';
+import 'package:project_proud_me/constant.dart';
+import 'package:project_proud_me/journal/my_journal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDrawer extends StatefulWidget {
 

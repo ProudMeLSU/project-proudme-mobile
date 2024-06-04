@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart' show SvgPicture;
 import 'package:project_proud_me/constant.dart';
 import 'package:project_proud_me/language.dart';
 
-class ActivityCard extends StatefulWidget {
+class FruitsVegetablesCard extends StatefulWidget {
   @override
-  _ActivityCardState createState() => _ActivityCardState();
+  _FruitsVegetablesCardState createState() => _FruitsVegetablesCardState();
 }
 
-class _ActivityCardState extends State<ActivityCard> {
-  String _selectedActivityType = '';
-  List<String> _dependentItems = [];
-
+class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,49 +35,6 @@ class _ActivityCardState extends State<ActivityCard> {
                       child: Form(
                         child: Column(
                           children: [
-                            Text(
-                              'Activity Type',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: fontFamily,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            DropdownButtonFormField<String>(
-                              decoration: const InputDecoration(
-                                  labelText: 'Select activity category.'),
-                              onChanged: (value) {
-                                setState(() {
-                                  _selectedActivityType =
-                                      activityTypes[value!]!.first;
-                                  _dependentItems = activityTypes[value!] ?? [];
-                                });
-                              },
-                              items: activityTypes.keys
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                            DropdownButtonFormField<String>(
-                              decoration: const InputDecoration(
-                                  labelText: 'Select activity type.'),
-                              onChanged: (value) {},
-                              value: _selectedActivityType,
-                              items: _dependentItems
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
                             const SizedBox(
                               height: 20,
                             ),
@@ -111,43 +66,7 @@ class _ActivityCardState extends State<ActivityCard> {
                                 Expanded(
                                   child: TextFormField(
                                     decoration: const InputDecoration(
-                                        labelText: 'Hours'),
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).primaryColor,
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  child: IconButton(
-                                    icon: const Icon(Icons.add),
-                                    color: Colors.white,
-                                    onPressed: () {},
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).primaryColor,
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  child: IconButton(
-                                    icon: const Icon(Icons.remove),
-                                    color: Colors.white,
-                                    onPressed: () {},
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: TextFormField(
-                                    decoration: const InputDecoration(
-                                        labelText: 'Minutes'),
+                                        labelText: 'Servings/day'),
                                     keyboardType: TextInputType.number,
                                   ),
                                 ),
@@ -196,43 +115,7 @@ class _ActivityCardState extends State<ActivityCard> {
                                 Expanded(
                                   child: TextFormField(
                                     decoration: const InputDecoration(
-                                        labelText: 'Hours'),
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).primaryColor,
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  child: IconButton(
-                                    icon: const Icon(Icons.add),
-                                    color: Colors.white,
-                                    onPressed: () {},
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).primaryColor,
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  child: IconButton(
-                                    icon: const Icon(Icons.remove),
-                                    color: Colors.white,
-                                    onPressed: () {},
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: TextFormField(
-                                    decoration: const InputDecoration(
-                                        labelText: 'Minutes'),
+                                        labelText: 'Servings/day'),
                                     keyboardType: TextInputType.number,
                                   ),
                                 ),
@@ -285,12 +168,17 @@ class _ActivityCardState extends State<ActivityCard> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
-                          Icons.directions_run,
+                        SvgPicture.asset(
+                          appleIconPath,
+                          width: 20,
+                          height: 20,
                           color: secondaryColor,
                         ),
+                        const SizedBox(
+                          width: 5,
+                        ),
                         Text(
-                          myJournalItems[0],
+                          myJournalItems[2],
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -307,14 +195,9 @@ class _ActivityCardState extends State<ActivityCard> {
                             showDialog(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: Text(
-                                  myJournalItems[0],
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                ),
+                                title: Text(myJournalItems[2]),
                                 content: const Text(
-                                  activityInfo,
+                                  fruitsVegetablesInfo,
                                   style: TextStyle(
                                     fontSize: 20,
                                   ),

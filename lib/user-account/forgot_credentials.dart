@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-import '../language.dart';
+import 'package:project_proud_me/language.dart';
 
 class ForgetCredentialsScreen extends StatefulWidget {
   @override
@@ -118,7 +118,7 @@ class _ForgetCredentialsScreenState extends State<ForgetCredentialsScreen> {
             const SizedBox(height: 20),
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
+                backgroundColor: WidgetStateProperty.all<Color>(
                   const Color(0xfff5b342),
                 ),
               ),

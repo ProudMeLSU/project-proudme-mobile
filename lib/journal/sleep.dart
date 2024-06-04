@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:project_proud_me/constant.dart';
 import 'package:project_proud_me/language.dart';
 
-class ActivityCard extends StatefulWidget {
+class SleepCard extends StatefulWidget {
   @override
-  _ActivityCardState createState() => _ActivityCardState();
+  _SleepCardState createState() => _SleepCardState();
 }
 
-class _ActivityCardState extends State<ActivityCard> {
-  String _selectedActivityType = '';
-  List<String> _dependentItems = [];
-
+class _SleepCardState extends State<SleepCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,52 +34,6 @@ class _ActivityCardState extends State<ActivityCard> {
                       child: Form(
                         child: Column(
                           children: [
-                            Text(
-                              'Activity Type',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: fontFamily,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            DropdownButtonFormField<String>(
-                              decoration: const InputDecoration(
-                                  labelText: 'Select activity category.'),
-                              onChanged: (value) {
-                                setState(() {
-                                  _selectedActivityType =
-                                      activityTypes[value!]!.first;
-                                  _dependentItems = activityTypes[value!] ?? [];
-                                });
-                              },
-                              items: activityTypes.keys
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                            DropdownButtonFormField<String>(
-                              decoration: const InputDecoration(
-                                  labelText: 'Select activity type.'),
-                              onChanged: (value) {},
-                              value: _selectedActivityType,
-                              items: _dependentItems
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
                             Text(
                               'Set My Goal',
                               textAlign: TextAlign.center,
@@ -285,12 +236,18 @@ class _ActivityCardState extends State<ActivityCard> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
-                          Icons.directions_run,
-                          color: secondaryColor,
+                        Transform.rotate(
+                          angle: 0.7,
+                          child: const Icon(
+                            Icons.mode_night_outlined,
+                            color: secondaryColor,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
                         ),
                         Text(
-                          myJournalItems[0],
+                          myJournalItems[3],
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -307,14 +264,9 @@ class _ActivityCardState extends State<ActivityCard> {
                             showDialog(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: Text(
-                                  myJournalItems[0],
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                ),
+                                title: Text(myJournalItems[3]),
                                 content: const Text(
-                                  activityInfo,
+                                  sleepInfo,
                                   style: TextStyle(
                                     fontSize: 20,
                                   ),

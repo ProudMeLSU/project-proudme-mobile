@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:project_proud_me/constant.dart';
+import 'package:project_proud_me/endpoints.dart';
 import 'package:project_proud_me/introduction/introduction.dart';
+import 'package:project_proud_me/language.dart';
+import 'package:project_proud_me/user-account/forgot_credentials.dart';
+import 'package:project_proud_me/user-account/sign_up.dart';
+import 'package:project_proud_me/widgets/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'sign_up.dart';
-import 'forgot_credentials.dart';
-import '../constant.dart';
-import '../language.dart';
-import '../endpoints.dart';
-import '../widgets/toast.dart';
 
 class SignInScreen extends StatefulWidget {
   final bool redirectionFromVerificationScreen;
@@ -143,7 +142,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ElevatedButton(
                 onPressed: _allFieldsFilled ? handleLogin : null,
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
+                  backgroundColor: WidgetStateProperty.all<Color>(
                     const Color(0xfff5b342)
                   ),
                 ),

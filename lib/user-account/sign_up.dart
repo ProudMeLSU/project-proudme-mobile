@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:project_proud_me/constant.dart';
+import 'package:project_proud_me/endpoints.dart';
+import 'package:project_proud_me/language.dart';
+import 'package:project_proud_me/user-account/sign_up_verification.dart';
+import 'package:project_proud_me/widgets/toast.dart';
 
-import 'sign_up_verification.dart';
-import '../widgets/toast.dart';
-import '../constant.dart';
-import '../language.dart';
-import '../endpoints.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
@@ -329,7 +329,7 @@ final Map<String, dynamic> _formData = {
                 ElevatedButton(
                   onPressed: _allFieldsFilled ? () => handleRegister(context) : null,
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
+                    backgroundColor: WidgetStateProperty.all<Color>(
                     const Color(0xfff5b342),
                     ),
                   ),

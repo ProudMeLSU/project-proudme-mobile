@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'introduction/introduction.dart';
-
-import 'language.dart';
-import 'constant.dart';
+import 'package:project_proud_me/constant.dart';
+import 'package:project_proud_me/introduction/introduction.dart';
+import 'package:project_proud_me/language.dart';
 
 void main() {
   runApp(const MyApp());

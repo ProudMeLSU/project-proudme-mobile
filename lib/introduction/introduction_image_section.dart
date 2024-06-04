@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../language.dart';
-import '../constant.dart';
+import 'package:project_proud_me/constant.dart';
+import 'package:project_proud_me/language.dart';
 
 class IntroductionImageSection extends StatelessWidget {
   @override

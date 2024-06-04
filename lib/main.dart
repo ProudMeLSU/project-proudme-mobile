@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_proud_me/constant.dart';
-import 'package:project_proud_me/introduction/introduction.dart';
+import 'package:project_proud_me/introduction/introduction.dart' show Introduction;
 import 'package:project_proud_me/language.dart';
 
 void main() {
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurple,
-          secondary: Color(0xfff5b342)
+          secondary: const Color(0xfff5b342)
         ),
         useMaterial3: true,
         fontFamily: fontFamily

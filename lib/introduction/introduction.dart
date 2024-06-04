@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' show get;
 import 'package:project_proud_me/constant.dart';
 import 'package:project_proud_me/endpoints.dart';
 import 'package:project_proud_me/introduction/introduction_footer_section.dart';
@@ -9,7 +9,7 @@ import 'package:project_proud_me/language.dart';
 import 'package:project_proud_me/user-account/sign_in.dart';
 import 'package:project_proud_me/utils/logout.dart';
 import 'package:project_proud_me/widgets/app_drawer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
 
 class Introduction extends StatefulWidget {
 
@@ -46,7 +46,7 @@ class _IntroductionState extends State<Introduction> {
     }
     
     try {
-      var response = await http.get(
+      var response = await get(
         Uri.parse(users),
         headers: {
           'Authorization': 'Bearer $authToken',

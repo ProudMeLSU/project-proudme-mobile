@@ -1,8 +1,8 @@
-import 'dart:convert';
+import 'dart:convert' show jsonDecode;
 import 'package:flutter/material.dart';
 import 'package:project_proud_me/constant.dart';
 import 'package:project_proud_me/journal/my_journal.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
 
 class MyDrawer extends StatefulWidget {
 

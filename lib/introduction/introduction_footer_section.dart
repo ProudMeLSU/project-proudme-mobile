@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_proud_me/constant.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart' show launchUrl;
 
 class IntroductionFooterWidget extends StatelessWidget {
   final String regularText;

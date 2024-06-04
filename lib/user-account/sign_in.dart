@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'dart:convert' show jsonEncode;
+import 'package:http/http.dart' show post;
 import 'package:project_proud_me/constant.dart';
 import 'package:project_proud_me/endpoints.dart';
 import 'package:project_proud_me/introduction/introduction.dart';
@@ -8,7 +8,7 @@ import 'package:project_proud_me/language.dart';
 import 'package:project_proud_me/user-account/forgot_credentials.dart';
 import 'package:project_proud_me/user-account/sign_up.dart';
 import 'package:project_proud_me/widgets/toast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
 
 class SignInScreen extends StatefulWidget {
   final bool redirectionFromVerificationScreen;
@@ -51,7 +51,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
     try {
       String jsonData = jsonEncode(_formData);
-      var response = await http.post(
+      var response = await post(
         Uri.parse(login),
         body: jsonData,
         headers: {

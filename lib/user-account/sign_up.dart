@@ -1,8 +1,8 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:math';
+import 'dart:async' show Timer;
+import 'dart:convert' show json, jsonEncode;
+import 'dart:math' show Random;
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' show post, get;
 import 'package:project_proud_me/constant.dart';
 import 'package:project_proud_me/endpoints.dart';
 import 'package:project_proud_me/language.dart';
@@ -79,7 +79,7 @@ final Map<String, dynamic> _formData = {
 
   Future<void> checkForExistingEmailOrUsername(String field, dynamic value) async {
     try {
-        final response = await http.get(
+        final response = await get(
           Uri.parse(
             '$user?email=$value'
           )
@@ -144,7 +144,7 @@ final Map<String, dynamic> _formData = {
     });
 
     try {
-      var response = await http.post(
+      var response = await post(
         Uri.parse(sendEmail),
         body: emailParameters,
         headers: {

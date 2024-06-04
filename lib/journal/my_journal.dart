@@ -1,4 +1,4 @@
-import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:appinio_swiper/appinio_swiper.dart' show AppinioSwiper, SwipeOptions;
 import 'package:flutter/material.dart';
 import 'package:project_proud_me/constant.dart';
 import 'package:project_proud_me/introduction/introduction.dart';

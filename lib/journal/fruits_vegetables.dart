@@ -195,7 +195,11 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
                             showDialog(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: Text(myJournalItems[2]),
+                                title: Text(
+                                  myJournalItems[2],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
                                 content: const Text(
                                   fruitsVegetablesInfo,
                                   style: TextStyle(

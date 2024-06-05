@@ -73,7 +73,7 @@ class _MyJournalScreenState extends State<MyJournalScreen> {
                       swipeOptions: const SwipeOptions.only(
                           up: false, down: false, right: true, left: true),
                       loop: true,
-                      cardCount: 1,
+                      cardCount: 2,
                       cardBuilder: (BuildContext context, int index) {
                         switch (index) {
                           case 0:

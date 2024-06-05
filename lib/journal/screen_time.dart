@@ -293,7 +293,11 @@ class _ScreenTimeCardState extends State<ScreenTimeCard> {
                             showDialog(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: Text(myJournalItems[1]),
+                                title: Text(
+                                  myJournalItems[1],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
                                 content: const Text(
                                   screenTimeInfo,
                                   style: TextStyle(

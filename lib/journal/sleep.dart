@@ -264,7 +264,11 @@ class _SleepCardState extends State<SleepCard> {
                             showDialog(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: Text(myJournalItems[3]),
+                                title: Text(
+                                  myJournalItems[3],
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
                                 content: const Text(
                                   sleepInfo,
                                   style: TextStyle(

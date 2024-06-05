@@ -29,23 +29,60 @@ class _ScreenTimeCardState extends State<ScreenTimeCard> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                  flex: 6,
+                  flex: 10,
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Form(
                         child: Column(
                           children: [
-                            Text(
-                              'Screen Time Type',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: fontFamily,
-                                color: Theme.of(context).primaryColor,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.desktop_windows_outlined,
+                                  color: secondaryColor,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  myJournalItems[1],
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: fontFamily,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                        title: Text(
+                                          myJournalItems[1],
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        content: const Text(
+                                          screenTimeInfo,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Icon(Icons.info),
+                                ),
+                              ],
                             ),
+                            const Divider(),
                             DropdownButtonFormField<String>(
                               decoration: const InputDecoration(
                                   labelText: 'Select screen time type.'),
@@ -252,6 +289,29 @@ class _ScreenTimeCardState extends State<ScreenTimeCard> {
                               decoration: const InputDecoration(
                                   labelText: 'Type my thoughts'),
                             ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              'AI-Generated Feedback',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: fontFamily,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              'Please save for feedback!',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: fontFamily,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -265,54 +325,8 @@ class _ScreenTimeCardState extends State<ScreenTimeCard> {
                 flex: 1,
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.desktop_windows_outlined,
-                          color: secondaryColor,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          myJournalItems[1],
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: fontFamily,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                title: Text(
-                                  myJournalItems[1],
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                content: const Text(
-                                  screenTimeInfo,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          child: const Icon(Icons.info),
-                        ),
-                      ],
-                    ),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     ElevatedButton(
                       onPressed: () {},

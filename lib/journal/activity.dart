@@ -30,23 +30,56 @@ class _ActivityCardState extends State<ActivityCard> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                  flex: 6,
+                  flex: 10,
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Form(
                         child: Column(
                           children: [
-                            Text(
-                              'Activity Type',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: fontFamily,
-                                color: Theme.of(context).primaryColor,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.directions_run,
+                                  color: secondaryColor,
+                                ),
+                                Text(
+                                  myJournalItems[0],
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: fontFamily,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                        title: Text(myJournalItems[0],
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                        content: const Text(
+                                          activityInfo,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Icon(Icons.info),
+                                ),
+                              ],
                             ),
+                            const Divider(),
                             DropdownButtonFormField<String>(
                               decoration: const InputDecoration(
                                   labelText: 'Select activity category.'),
@@ -269,6 +302,29 @@ class _ActivityCardState extends State<ActivityCard> {
                               decoration: const InputDecoration(
                                   labelText: 'Type my thoughts'),
                             ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              'AI-Generated Feedback',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: fontFamily,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              'Please save for feedback!',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: fontFamily,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -282,52 +338,8 @@ class _ActivityCardState extends State<ActivityCard> {
                 flex: 1,
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.directions_run,
-                          color: secondaryColor,
-                        ),
-                        Text(
-                          myJournalItems[0],
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: fontFamily,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                title: Text(
-                                  myJournalItems[0],
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                ),
-                                content: const Text(
-                                  activityInfo,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                          child: const Icon(Icons.info),
-                        ),
-                      ],
-                    ),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     ElevatedButton(
                       onPressed: () {},

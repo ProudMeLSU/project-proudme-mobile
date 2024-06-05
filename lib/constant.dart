@@ -73,4 +73,4 @@ const Map<String, List<String>> activityTypes = {
           ]
   };
 
-  const List<String> screenTimeType = ['Academic', 'Non-Academic'];
+  const List<String> screenTimeType = ['Academic', 'Gaming & Video Chatting'];

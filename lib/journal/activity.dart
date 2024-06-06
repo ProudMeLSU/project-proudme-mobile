@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart'
+    show TextInputFormatter, FilteringTextInputFormatter;
 import 'package:project_proud_me/constant.dart';
 import 'package:project_proud_me/language.dart';
 
@@ -10,6 +12,221 @@ class ActivityCard extends StatefulWidget {
 class _ActivityCardState extends State<ActivityCard> {
   String _selectedActivityType = '';
   List<String> _dependentItems = [];
+
+  late Map<String, TextEditingController> _goalHourControllers;
+  late Map<String, TextEditingController> _goalMinuteControllers;
+  TextEditingController _goalHourController = TextEditingController();
+  TextEditingController _goalMinuteController = TextEditingController();
+
+  late Map<String, TextEditingController> _behaviorHourControllers;
+  late Map<String, TextEditingController> _behaviorMinuteControllers;
+  TextEditingController _behaviorHourController = TextEditingController();
+  TextEditingController _behaviorMinuteController = TextEditingController();
+
+  String calculateTotalGoal() {
+    int total = 0;
+
+    _goalHourControllers.forEach((key, controller) {
+      if (controller.text.isNotEmpty) {
+        int value = int.tryParse(controller.text)! * 60;
+        total += value;
+      }
+    });
+
+    _goalMinuteControllers.forEach((key, controller) {
+      if (controller.text.isNotEmpty) {
+        int value = int.tryParse(controller.text)!;
+        total += value;
+      }
+    });
+
+    return total.toString();
+  }
+
+  String calculateTotalBehavior() {
+    int total = 0;
+
+    _behaviorHourControllers.forEach((key, controller) {
+      if (controller.text.isNotEmpty) {
+        int value = int.tryParse(controller.text)! * 60;
+        total += value;
+      }
+    });
+
+    _behaviorMinuteControllers.forEach((key, controller) {
+      if (controller.text.isNotEmpty) {
+        int value = int.tryParse(controller.text)!;
+        total += value;
+      }
+    });
+
+    return total.toString();
+  }
+
+  void incrementGoalHour() {
+    setState(() {
+      if (_selectedActivityType != '') {
+        if (_goalHourControllers[_selectedActivityType]!.text.isEmpty) {
+          _goalHourControllers[_selectedActivityType]!.text = 1.toString();
+        } else {
+          _goalHourControllers[_selectedActivityType]!.text =
+              (int.parse(_goalHourControllers[_selectedActivityType]!.text) + 1)
+                  .toString();
+        }
+      }
+    });
+  }
+
+  void incrementBehaviorHour() {
+    setState(() {
+      if (_selectedActivityType != '') {
+        if (_behaviorHourControllers[_selectedActivityType]!.text.isEmpty) {
+          _behaviorHourControllers[_selectedActivityType]!.text = 1.toString();
+        } else {
+          _behaviorHourControllers[_selectedActivityType]!.text = (int.parse(
+                      _behaviorHourControllers[_selectedActivityType]!.text) +
+                  1)
+              .toString();
+        }
+      }
+    });
+  }
+
+  void incrementGoalMinute() {
+    setState(() {
+      if (_selectedActivityType != '') {
+        if (_goalMinuteControllers[_selectedActivityType]!.text.isEmpty) {
+          _goalMinuteControllers[_selectedActivityType]!.text = 1.toString();
+        } else {
+          _goalMinuteControllers[_selectedActivityType]!.text =
+              (int.parse(_goalMinuteControllers[_selectedActivityType]!.text) +
+                      1)
+                  .toString();
+        }
+      }
+    });
+  }
+
+  void incrementBehaviorMinute() {
+    setState(() {
+      if (_selectedActivityType != '') {
+        if (_behaviorMinuteControllers[_selectedActivityType]!.text.isEmpty) {
+          _behaviorMinuteControllers[_selectedActivityType]!.text =
+              1.toString();
+        } else {
+          _behaviorMinuteControllers[_selectedActivityType]!.text = (int.parse(
+                      _behaviorMinuteControllers[_selectedActivityType]!.text) +
+                  1)
+              .toString();
+        }
+      }
+    });
+  }
+
+  void decrementGoalHour() {
+    setState(() {
+      if (_selectedActivityType != '') {
+        if (_goalHourControllers[_selectedActivityType]!.text.isNotEmpty &&
+            int.parse(_goalHourControllers[_selectedActivityType]!.text) > 0) {
+          _goalHourControllers[_selectedActivityType]!.text =
+              (int.parse(_goalHourControllers[_selectedActivityType]!.text) - 1)
+                  .toString();
+        }
+      }
+    });
+  }
+
+  void decrementBehaviorHour() {
+    setState(() {
+      if (_selectedActivityType != '') {
+        if (_behaviorHourControllers[_selectedActivityType]!.text.isNotEmpty &&
+            int.parse(_behaviorHourControllers[_selectedActivityType]!.text) >
+                0) {
+          _behaviorHourControllers[_selectedActivityType]!.text = (int.parse(
+                      _behaviorHourControllers[_selectedActivityType]!.text) -
+                  1)
+              .toString();
+        }
+      }
+    });
+  }
+
+  void decrementGoalMinute() {
+    setState(() {
+      if (_selectedActivityType != '') {
+        if (_goalMinuteControllers[_selectedActivityType]!.text.isNotEmpty &&
+            int.parse(_goalMinuteControllers[_selectedActivityType]!.text) >
+                0) {
+          _goalMinuteControllers[_selectedActivityType]!.text =
+              (int.parse(_goalMinuteControllers[_selectedActivityType]!.text) -
+                      1)
+                  .toString();
+        }
+      }
+    });
+  }
+
+  void decrementBehaviorMinute() {
+    setState(() {
+      if (_selectedActivityType != '') {
+        if (_behaviorMinuteControllers[_selectedActivityType]!
+                .text
+                .isNotEmpty &&
+            int.parse(_behaviorMinuteControllers[_selectedActivityType]!.text) >
+                0) {
+          _behaviorMinuteControllers[_selectedActivityType]!.text = (int.parse(
+                      _behaviorMinuteControllers[_selectedActivityType]!.text) -
+                  1)
+              .toString();
+        }
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initGoalHourControllers();
+    _initGoalMinuteControllers();
+    _initBehaviorHourControllers();
+    _initBehaviorMinuteControllers();
+  }
+
+  void _initGoalHourControllers() {
+    _goalHourControllers = {};
+    activityTypes.values.forEach((activities) {
+      activities.forEach((activity) {
+        _goalHourControllers[activity] = TextEditingController();
+      });
+    });
+  }
+
+  void _initGoalMinuteControllers() {
+    _goalMinuteControllers = {};
+    activityTypes.values.forEach((activities) {
+      activities.forEach((activity) {
+        _goalMinuteControllers[activity] = TextEditingController();
+      });
+    });
+  }
+
+  void _initBehaviorHourControllers() {
+    _behaviorHourControllers = {};
+    activityTypes.values.forEach((activities) {
+      activities.forEach((activity) {
+        _behaviorHourControllers[activity] = TextEditingController();
+      });
+    });
+  }
+
+  void _initBehaviorMinuteControllers() {
+    _behaviorMinuteControllers = {};
+    activityTypes.values.forEach((activities) {
+      activities.forEach((activity) {
+        _behaviorMinuteControllers[activity] = TextEditingController();
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +305,17 @@ class _ActivityCardState extends State<ActivityCard> {
                                   _selectedActivityType =
                                       activityTypes[value!]!.first;
                                   _dependentItems = activityTypes[value!] ?? [];
+                                  _goalHourController = _goalHourControllers[
+                                      _selectedActivityType]!;
+                                  _goalMinuteController =
+                                      _goalMinuteControllers[
+                                          _selectedActivityType]!;
+                                  _behaviorHourController =
+                                      _behaviorHourControllers[
+                                          _selectedActivityType]!;
+                                  _behaviorMinuteController =
+                                      _behaviorMinuteControllers[
+                                          _selectedActivityType]!;
                                 });
                               },
                               items: activityTypes.keys
@@ -102,7 +330,22 @@ class _ActivityCardState extends State<ActivityCard> {
                             DropdownButtonFormField<String>(
                               decoration: const InputDecoration(
                                   labelText: 'Select activity type.'),
-                              onChanged: (value) {},
+                              onChanged: (value) {
+                                _selectedActivityType = value!;
+                                setState(() {
+                                  _goalHourController = _goalHourControllers[
+                                      _selectedActivityType]!;
+                                  _goalMinuteController =
+                                      _goalMinuteControllers[
+                                          _selectedActivityType]!;
+                                  _behaviorHourController =
+                                      _behaviorHourControllers[
+                                          _selectedActivityType]!;
+                                  _behaviorMinuteController =
+                                      _behaviorMinuteControllers[
+                                          _selectedActivityType]!;
+                                });
+                              },
                               value: _selectedActivityType,
                               items: _dependentItems
                                   .map<DropdownMenuItem<String>>(
@@ -137,15 +380,22 @@ class _ActivityCardState extends State<ActivityCard> {
                                   child: IconButton(
                                     icon: const Icon(Icons.remove),
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      decrementGoalHour();
+                                    },
                                   ),
                                 ),
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: TextFormField(
+                                    controller: _goalHourController,
                                     decoration: const InputDecoration(
                                         labelText: 'Hours'),
                                     keyboardType: TextInputType.number,
+                                    onChanged: (value) => {setState(() {})},
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(width: 10),
@@ -157,7 +407,9 @@ class _ActivityCardState extends State<ActivityCard> {
                                   child: IconButton(
                                     icon: const Icon(Icons.add),
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      incrementGoalHour();
+                                    },
                                   ),
                                 ),
                               ],
@@ -173,15 +425,22 @@ class _ActivityCardState extends State<ActivityCard> {
                                   child: IconButton(
                                     icon: const Icon(Icons.remove),
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      decrementGoalMinute();
+                                    },
                                   ),
                                 ),
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: TextFormField(
+                                    controller: _goalMinuteController,
                                     decoration: const InputDecoration(
                                         labelText: 'Minutes'),
                                     keyboardType: TextInputType.number,
+                                    onChanged: (value) => {setState(() {})},
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(width: 10),
@@ -193,13 +452,29 @@ class _ActivityCardState extends State<ActivityCard> {
                                   child: IconButton(
                                     icon: const Icon(Icons.add),
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      incrementGoalMinute();
+                                    },
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(
-                              height: 20,
+                              height: 10,
+                            ),
+                            Text(
+                              'Total Goal: ${calculateTotalGoal()} Minutes',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: fontFamily,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            const Divider(),
+                            const SizedBox(
+                              height: 15,
                             ),
                             Text(
                               'Track My Behaviour',
@@ -222,15 +497,24 @@ class _ActivityCardState extends State<ActivityCard> {
                                   child: IconButton(
                                     icon: const Icon(Icons.remove),
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      decrementBehaviorHour();
+                                    },
                                   ),
                                 ),
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: TextFormField(
+                                    controller: _behaviorHourController,
                                     decoration: const InputDecoration(
                                         labelText: 'Hours'),
                                     keyboardType: TextInputType.number,
+                                    onChanged: (value) {setState(() {
+                                      
+                                    });},
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(width: 10),
@@ -242,7 +526,9 @@ class _ActivityCardState extends State<ActivityCard> {
                                   child: IconButton(
                                     icon: const Icon(Icons.add),
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      incrementBehaviorHour();
+                                    },
                                   ),
                                 ),
                               ],
@@ -258,15 +544,24 @@ class _ActivityCardState extends State<ActivityCard> {
                                   child: IconButton(
                                     icon: const Icon(Icons.remove),
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      decrementBehaviorMinute();
+                                    },
                                   ),
                                 ),
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: TextFormField(
+                                    controller: _behaviorMinuteController,
                                     decoration: const InputDecoration(
                                         labelText: 'Minutes'),
                                     keyboardType: TextInputType.number,
+                                    onChanged: (value) {setState(() {
+                                      
+                                    });},
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(width: 10),
@@ -278,13 +573,29 @@ class _ActivityCardState extends State<ActivityCard> {
                                   child: IconButton(
                                     icon: const Icon(Icons.add),
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      incrementBehaviorMinute();
+                                    },
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(
-                              height: 20,
+                              height: 10,
+                            ),
+                            Text(
+                              'Total Behavior: ${calculateTotalBehavior()} Minutes',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: fontFamily,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            const Divider(),
+                            const SizedBox(
+                              height: 10,
                             ),
                             Text(
                               'Reflect',
@@ -303,7 +614,7 @@ class _ActivityCardState extends State<ActivityCard> {
                                   labelText: 'Type my thoughts'),
                             ),
                             const SizedBox(
-                              height: 20,
+                              height: 15,
                             ),
                             Text(
                               'AI-Generated Feedback',

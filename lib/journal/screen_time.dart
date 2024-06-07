@@ -14,7 +14,7 @@ class _ScreenTimeCardState extends State<ScreenTimeCard> {
     for better performance, use the widget on all journal behavior
     items.
   */
-  
+
   String _selectedScreenTimeType = '';
 
   late Map<String, TextEditingController> _goalHourControllers;
@@ -209,6 +209,7 @@ class _ScreenTimeCardState extends State<ScreenTimeCard> {
     _goalHourControllers = {};
     screenTimeType.forEach((type) {
       _goalHourControllers[type] = TextEditingController();
+      _goalHourControllers[type]!.text = 0.toString();
     });
   }
 
@@ -216,6 +217,7 @@ class _ScreenTimeCardState extends State<ScreenTimeCard> {
     _goalMinuteControllers = {};
     screenTimeType.forEach((type) {
       _goalMinuteControllers[type] = TextEditingController();
+      _goalMinuteControllers[type]!.text = 0.toString();
     });
   }
 
@@ -223,6 +225,7 @@ class _ScreenTimeCardState extends State<ScreenTimeCard> {
     _behaviorHourControllers = {};
     screenTimeType.forEach((type) {
       _behaviorHourControllers[type] = TextEditingController();
+      _behaviorHourControllers[type]!.text = 0.toString();
     });
   }
 
@@ -230,6 +233,7 @@ class _ScreenTimeCardState extends State<ScreenTimeCard> {
     _behaviorMinuteControllers = {};
     screenTimeType.forEach((type) {
       _behaviorMinuteControllers[type] = TextEditingController();
+      _behaviorMinuteControllers[type]!.text = 0.toString();
     });
   }
 

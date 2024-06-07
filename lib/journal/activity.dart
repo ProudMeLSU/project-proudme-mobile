@@ -197,6 +197,7 @@ class _ActivityCardState extends State<ActivityCard> {
     activityTypes.values.forEach((activities) {
       activities.forEach((activity) {
         _goalHourControllers[activity] = TextEditingController();
+        _goalHourControllers[activity]!.text = 0.toString();
       });
     });
   }
@@ -206,6 +207,7 @@ class _ActivityCardState extends State<ActivityCard> {
     activityTypes.values.forEach((activities) {
       activities.forEach((activity) {
         _goalMinuteControllers[activity] = TextEditingController();
+        _goalMinuteControllers[activity]!.text = 0.toString();
       });
     });
   }
@@ -215,6 +217,7 @@ class _ActivityCardState extends State<ActivityCard> {
     activityTypes.values.forEach((activities) {
       activities.forEach((activity) {
         _behaviorHourControllers[activity] = TextEditingController();
+        _behaviorHourControllers[activity]!.text = 0.toString();
       });
     });
   }
@@ -224,6 +227,7 @@ class _ActivityCardState extends State<ActivityCard> {
     activityTypes.values.forEach((activities) {
       activities.forEach((activity) {
         _behaviorMinuteControllers[activity] = TextEditingController();
+        _behaviorMinuteControllers[activity]!.text = 0.toString();
       });
     });
   }
@@ -509,9 +513,9 @@ class _ActivityCardState extends State<ActivityCard> {
                                     decoration: const InputDecoration(
                                         labelText: 'Hours'),
                                     keyboardType: TextInputType.number,
-                                    onChanged: (value) {setState(() {
-                                      
-                                    });},
+                                    onChanged: (value) {
+                                      setState(() {});
+                                    },
                                     inputFormatters: <TextInputFormatter>[
                                       FilteringTextInputFormatter.digitsOnly
                                     ],
@@ -556,9 +560,9 @@ class _ActivityCardState extends State<ActivityCard> {
                                     decoration: const InputDecoration(
                                         labelText: 'Minutes'),
                                     keyboardType: TextInputType.number,
-                                    onChanged: (value) {setState(() {
-                                      
-                                    });},
+                                    onChanged: (value) {
+                                      setState(() {});
+                                    },
                                     inputFormatters: <TextInputFormatter>[
                                       FilteringTextInputFormatter.digitsOnly
                                     ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart' show SvgPicture;
+import 'package:flutter/services.dart'
+    show TextInputFormatter, FilteringTextInputFormatter;
 import 'package:project_proud_me/constant.dart';
 import 'package:project_proud_me/language.dart';
 
@@ -9,6 +11,49 @@ class FruitsVegetablesCard extends StatefulWidget {
 }
 
 class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
+  final TextEditingController _goalController = TextEditingController();
+  final TextEditingController _behaviorController = TextEditingController();
+
+  void incrementGoalServing() {
+    setState(() {
+      if (_goalController.text.isEmpty) {
+        _goalController.text = 1.toString();
+      } else {
+        _goalController.text = (int.parse(_goalController.text) + 1).toString();
+      }
+    });
+  }
+
+  void incrementBehaviorServing() {
+    setState(() {
+      if (_behaviorController.text.isEmpty) {
+        _behaviorController.text = 1.toString();
+      } else {
+        _behaviorController.text =
+            (int.parse(_behaviorController.text) + 1).toString();
+      }
+    });
+  }
+
+  void decrementGoalServing() {
+    setState(() {
+      if (_goalController.text.isNotEmpty &&
+          int.parse(_goalController.text) > 0) {
+        _goalController.text = (int.parse(_goalController.text) - 1).toString();
+      }
+    });
+  }
+
+  void decrementBehaviorServing() {
+    setState(() {
+      if (_behaviorController.text.isNotEmpty &&
+          int.parse(_behaviorController.text) > 0) {
+        _behaviorController.text =
+            (int.parse(_behaviorController.text) - 1).toString();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -105,15 +150,21 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
                                   child: IconButton(
                                     icon: const Icon(Icons.remove),
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      decrementGoalServing();
+                                    },
                                   ),
                                 ),
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: TextFormField(
+                                    controller: _goalController,
                                     decoration: const InputDecoration(
                                         labelText: 'Servings/day'),
                                     keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(width: 10),
@@ -125,13 +176,19 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
                                   child: IconButton(
                                     icon: const Icon(Icons.add),
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      incrementGoalServing();
+                                    },
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(
-                              height: 20,
+                              height: 10,
+                            ),
+                            const Divider(),
+                            const SizedBox(
+                              height: 15,
                             ),
                             Text(
                               'Track My Behaviour',
@@ -154,15 +211,21 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
                                   child: IconButton(
                                     icon: const Icon(Icons.remove),
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      decrementBehaviorServing();
+                                    },
                                   ),
                                 ),
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: TextFormField(
+                                    controller: _behaviorController,
                                     decoration: const InputDecoration(
                                         labelText: 'Servings/day'),
                                     keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(width: 10),
@@ -174,13 +237,19 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
                                   child: IconButton(
                                     icon: const Icon(Icons.add),
                                     color: Colors.white,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      incrementBehaviorServing();
+                                    },
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(
-                              height: 20,
+                              height: 10,
+                            ),
+                            const Divider(),
+                            const SizedBox(
+                              height: 10,
                             ),
                             Text(
                               'Reflect',

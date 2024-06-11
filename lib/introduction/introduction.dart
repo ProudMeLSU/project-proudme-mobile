@@ -7,7 +7,7 @@ import 'package:project_proud_me/introduction/introduction_image_section.dart';
 import 'package:project_proud_me/introduction/introduction_list_section.dart';
 import 'package:project_proud_me/language.dart';
 import 'package:project_proud_me/user-account/sign_in.dart';
-import 'package:project_proud_me/utils/logout.dart';
+import 'package:project_proud_me/utils/helpers.dart';
 import 'package:project_proud_me/widgets/app_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
 

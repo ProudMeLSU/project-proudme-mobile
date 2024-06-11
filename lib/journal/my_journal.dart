@@ -1,4 +1,5 @@
-import 'package:appinio_swiper/appinio_swiper.dart' show AppinioSwiper, SwipeOptions;
+import 'package:appinio_swiper/appinio_swiper.dart'
+    show AppinioSwiper, SwipeOptions;
 import 'package:flutter/material.dart';
 import 'package:project_proud_me/constant.dart';
 import 'package:project_proud_me/introduction/introduction.dart';
@@ -7,7 +8,7 @@ import 'package:project_proud_me/journal/fruits_vegetables.dart';
 import 'package:project_proud_me/journal/screen_time.dart';
 import 'package:project_proud_me/journal/sleep.dart';
 import 'package:project_proud_me/language.dart';
-import 'package:project_proud_me/utils/logout.dart';
+import 'package:project_proud_me/utils/helpers.dart';
 import 'package:project_proud_me/widgets/app_drawer.dart';
 
 class MyJournalScreen extends StatefulWidget {
@@ -17,6 +18,24 @@ class MyJournalScreen extends StatefulWidget {
 
 class _MyJournalScreenState extends State<MyJournalScreen> {
   bool _isLoading = false;
+  late String _userId;
+
+  Future<void> _setUserId() async {
+    setState(() {
+      _isLoading = true;
+    });
+    var userId = await getUserId();
+    setState(() {
+      _userId = userId;
+      _isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _setUserId();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +89,11 @@ class _MyJournalScreenState extends State<MyJournalScreen> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.90,
                     child: AppinioSwiper(
+                      backgroundCardCount: -1,
                       swipeOptions: const SwipeOptions.only(
                           up: false, down: false, right: true, left: true),
                       loop: true,
-                      cardCount: 3,
+                      cardCount: 4,
                       cardBuilder: (BuildContext context, int index) {
                         switch (index) {
                           case 0:
@@ -83,7 +103,9 @@ class _MyJournalScreenState extends State<MyJournalScreen> {
                           case 2:
                             return FruitsVegetablesCard();
                           case 3:
-                            return SleepCard();
+                            return SleepCard(
+                              userId: _userId,
+                            );
                           default:
                             throw Exception();
                         }

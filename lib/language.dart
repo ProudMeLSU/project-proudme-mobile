@@ -55,3 +55,5 @@ const String fruitsVegetablesInfo = 'Eat more servings of fruits and vegetables 
 const String sleepInfo = 'Get a good night\'s rest to be productive and healthy. \nRecommended Level: 9-11 hours/night';
 const String sleepNotSaved = 'Your sleep goal/behavior couldn\'t be saved! Please contact the technical team.';
 const String sleepSaved = 'Sleep goal/behavior saved successfully!';
+const String eatingNotSaved = 'Your eating goal/behavior couldn\'t be saved! Please contact the technical team.';
+const String eatingSaved = 'Eating goal/behavior saved successfully!';

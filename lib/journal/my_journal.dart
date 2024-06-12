@@ -101,7 +101,9 @@ class _MyJournalScreenState extends State<MyJournalScreen> {
                           case 1:
                             return ScreenTimeCard();
                           case 2:
-                            return FruitsVegetablesCard();
+                            return FruitsVegetablesCard(
+                              userId: _userId,
+                            );
                           case 3:
                             return SleepCard(
                               userId: _userId,

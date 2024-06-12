@@ -42,7 +42,7 @@ class _SleepCardState extends State<SleepCard> {
     String reflection = _reflectionController.text;
 
     try {
-      String chatPayload = getChatbotPayload(
+      String chatPayload = getChatbotPayloadForSleep(
           goalHour, goalMinute, behaviorHour, behaviorMinute, reflection);
 
       var chatResponse = await post(

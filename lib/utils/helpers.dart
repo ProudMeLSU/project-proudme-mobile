@@ -73,6 +73,7 @@ String getSleepPayload(String goalHour, String goalMinute, String behaviorHour,
 
   bool goalStatus = behaviorValue >= goalValue;
   String date = getNowInFormat(dateFormat);
+  String dateToday = getNowInFormat('yyyy-MM-ddTHH:mm:ss.SSSZ');
 
   Map<String, dynamic> payload = {
     'behaviorValue': behaviorValue,
@@ -83,13 +84,39 @@ String getSleepPayload(String goalHour, String goalMinute, String behaviorHour,
     'goalStatus': goalStatus,
     'user': userId,
     'recommendedValue': recommendedSleepValue,
-    'goalType': 'sleep'
+    'goalType': 'sleep',
+    'dateToday': dateToday
   };
 
   return jsonEncode(payload);
 }
 
-String getChatbotPayload(String goalHour, String goalMinute,
+String getEatingPayload(String goal, String behavior, String userId,
+    String feedback, String reflection) {
+  int goalValue = int.parse(goal);
+  int behaviorValue = int.parse(behavior);
+
+  bool goalStatus = behaviorValue >= goalValue;
+  String date = getNowInFormat(dateFormat);
+  String dateToday = getNowInFormat('yyyy-MM-ddTHH:mm:ss.SSSZ');
+
+  Map<String, dynamic> payload = {
+    'behaviorValue': behaviorValue,
+    'goalValue': goalValue,
+    'reflection': reflection,
+    'feedback': feedback,
+    'date': date,
+    'goalStatus': goalStatus,
+    'user': userId,
+    'recommendedValue': recommendedEatingValue,
+    'goalType': 'eating',
+    'dateToday': dateToday
+  };
+
+  return jsonEncode(payload);
+}
+
+String getChatbotPayloadForSleep(String goalHour, String goalMinute,
     String behaviorHour, String behaviorMinute, String reflection) {
   double totalGoal = int.parse(goalHour) + (int.parse(goalMinute) / 60);
 
@@ -104,6 +131,30 @@ String getChatbotPayload(String goalHour, String goalMinute,
       "Recommended value: $recommendedSleepValue, "
       "Actual Goal Value: ${totalGoal.toStringAsFixed(2)}, "
       "Actual behavior value achieved: ${totalBehavior.toStringAsFixed(2)}, "
+      "percentage of actual goal achieved: ${percentageAchieved.toStringAsFixed(2)}%, "
+      "percentage of recommended goal achieved: ${percentageOfRecommendedGoal.toStringAsFixed(2)}%, "
+      "Reflection: $reflection.";
+
+  Map<String, List<Map<String, String>>> payload = {
+    'prompt': [
+      {'role': 'system', 'content': content}
+    ]
+  };
+
+  return jsonEncode(payload);
+}
+
+String getChatbotPayloadForEating(
+    String goal, String behavior, String reflection) {
+  double percentageAchieved = (int.parse(behavior) / int.parse(goal)) * 100;
+
+  double percentageOfRecommendedGoal =
+      (int.parse(behavior) / recommendedEatingValue) * 100;
+
+  String content = "Health goal type: eating, "
+      "Recommended value: $recommendedEatingValue, "
+      "Actual Goal Value: $goal, "
+      "Actual behavior value achieved: $behavior}, "
       "percentage of actual goal achieved: ${percentageAchieved.toStringAsFixed(2)}%, "
       "percentage of recommended goal achieved: ${percentageOfRecommendedGoal.toStringAsFixed(2)}%, "
       "Reflection: $reflection.";

@@ -5,11 +5,12 @@ import 'package:project_proud_me/constant.dart';
 import 'package:project_proud_me/language.dart';
 import 'package:project_proud_me/utils/helpers.dart';
 import 'package:project_proud_me/endpoints.dart';
-import 'package:http/http.dart' show get;
+import 'package:http/http.dart' show get, post;
 import 'dart:convert';
 import 'package:project_proud_me/widgets/toast.dart';
 
 class SleepCard extends StatefulWidget {
+  //TODO: Change the API to receive goalValue and behaviorValue in minutes not hours (double)
   final String userId;
 
   const SleepCard({required this.userId});
@@ -27,6 +28,64 @@ class _SleepCardState extends State<SleepCard> {
   final TextEditingController _reflectionController = TextEditingController();
   bool _isLoading = false;
   late Map<String, dynamic> _sleepData;
+  late String _feedback;
+
+  void onSave() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    String goalHour = _goalHourController.text;
+    String goalMinute = _goalMinuteController.text;
+    String behaviorHour = _behaviorHourController.text;
+    String behaviorMinute = _behaviorMinuteController.text;
+    String reflection = _reflectionController.text;
+
+    try {
+      String chatPayload = getChatbotPayload(
+          goalHour, goalMinute, behaviorHour, behaviorMinute, reflection);
+
+      var chatResponse = await post(
+        Uri.parse(getChatReply),
+        body: chatPayload,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (chatResponse.statusCode == 200) {
+        String feedback = jsonDecode(chatResponse.body)['chat_reply'];
+        setState(() {
+          _feedback = feedback;
+        });
+
+        String payload = getSleepPayload(goalHour, goalMinute, behaviorHour,
+            behaviorMinute, widget.userId, feedback, reflection);
+
+        var response = await post(
+          Uri.parse(saveGoal),
+          body: payload,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        );
+
+        if (response.statusCode == 200) {
+          showCustomToast(context, sleepSaved, Theme.of(context).primaryColor);
+        } else {
+          showCustomToast(context, sleepNotSaved, errorColor);
+        }
+      } else {
+        showCustomToast(context, sleepNotSaved, errorColor);
+      }
+    } catch (e) {
+      showCustomToast(context, e.toString(), errorColor);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   Future<void> _fetchDataAndSetControllers() async {
     setState(() {
@@ -41,18 +100,32 @@ class _SleepCardState extends State<SleepCard> {
 
       if (response.statusCode == 200) {
         List<dynamic> responseBody = json.decode(response.body);
-        setState(() {
-          _sleepData = responseBody.first as Map<String, dynamic>;
-        });
 
-        if (isToday(_sleepData['dateToday'])) {
-          double goal = toDouble(_sleepData['goalValue']);
-          double behavior = toDouble(_sleepData['behaviorValue']);
-          _goalHourController.text = getHourFromResponse(goal);
-          _goalMinuteController.text = getMinuteFromResponse(goal);
-          _behaviorHourController.text = getHourFromResponse(behavior);
-          _behaviorMinuteController.text = getMinuteFromResponse(behavior);
-          _reflectionController.text = _sleepData['reflection'];
+        if (responseBody.isNotEmpty) {
+          setState(() {
+            _sleepData = responseBody.first as Map<String, dynamic>;
+          });
+          if (isToday(_sleepData['dateToday'])) {
+            double goal = toDouble(_sleepData['goalValue']);
+            double behavior = toDouble(_sleepData['behaviorValue']);
+            _goalHourController.text = getHourFromResponse(goal);
+            _goalMinuteController.text = getMinuteFromResponse(goal);
+            _behaviorHourController.text = getHourFromResponse(behavior);
+            _behaviorMinuteController.text = getMinuteFromResponse(behavior);
+            _reflectionController.text = _sleepData['reflection'];
+            setState(() {
+              _feedback = _sleepData['feedback'];
+            });
+          }
+        } else {
+          setState(() {
+            _sleepData = {};
+            _feedback = '';
+          });
+          _goalHourController.text = 0.toString();
+          _goalMinuteController.text = 0.toString();
+          _behaviorHourController.text = 0.toString();
+          _behaviorMinuteController.text = 0.toString();
         }
       }
     } catch (e) {
@@ -528,7 +601,7 @@ class _SleepCardState extends State<SleepCard> {
                                   height: 10,
                                 ),
                                 Text(
-                                  _sleepData['feedback'],
+                                  _feedback,
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontFamily: fontFamily,
@@ -551,7 +624,9 @@ class _SleepCardState extends State<SleepCard> {
                           height: 5,
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            onSave();
+                          },
                           style: ButtonStyle(
                             backgroundColor: WidgetStateProperty.all<Color>(
                                 const Color(0xfff5b342)),

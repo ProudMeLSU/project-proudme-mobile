@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart' show Color;
 
 const List<String> months = [
-                'January',
-                'February',
-                'March',
-                'April',
-                'May',
-                'June',
-                'July',
-                'August',
-                'September',
-                'October',
-                'November',
-                'December',
-              ];
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
 
 const List<String> grades = [
-                '5th',
-                '6th',
-                '7th',
-                '8th',
-                '9th',
-              ];
+  '5th',
+  '6th',
+  '7th',
+  '8th',
+  '9th',
+];
 
 const List<String> genders = [
-                'Male',
-                'Female',
-                'Other',
-                'Prefer not to tell',
-              ];
+  'Male',
+  'Female',
+  'Other',
+  'Prefer not to tell',
+];
 
-const String charSets = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const String charSets =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 const String miniLogoPath = 'assets/images/proudme_logo_mini.png';
 const String schoolKidsPicPath = 'assets/images/school_kids.png';
@@ -46,31 +47,20 @@ const String authTokenKey = 'authToken';
 const String userDataKey = 'userData';
 
 const Color errorColor = Color.fromRGBO(255, 0, 0, 0.8);
-const List<String> myJournalItems = ['Physical Activity', 'Screen Time', 'Fruits & Vegetables', 'Sleep'];
+const List<String> myJournalItems = [
+  'Physical Activity',
+  'Screen Time',
+  'Fruits & Vegetables',
+  'Sleep'
+];
 const secondaryColor = Color(0xfff5b342);
 
 const Map<String, List<String>> activityTypes = {
-    'Strenuous': [
-                'Running',
-                'Jogging',
-                'Football',
-                'Soccer',
-                'Basketball'
-              ],
-    'Moderate': [
-                'Baseball',
-                'Tennis',
-                'Fast Walking',
-                'Volleyball',
-                'Badminton'
-              ],
-    'Mild': [
-            'Yoga',
-            'Archery',
-            'Bowling',
-            'Golf',
-            'Easy Walking'
-          ]
-  };
+  'Strenuous': ['Running', 'Jogging', 'Football', 'Soccer', 'Basketball'],
+  'Moderate': ['Baseball', 'Tennis', 'Fast Walking', 'Volleyball', 'Badminton'],
+  'Mild': ['Yoga', 'Archery', 'Bowling', 'Golf', 'Easy Walking']
+};
 
-  const List<String> screenTimeType = ['Academic', 'Gaming & Video Chatting'];
+const List<String> screenTimeType = ['Academic', 'Gaming & Video Chatting'];
+const dateFormat = 'M/d/yyyy';
+const recommendedSleepValue = 9;

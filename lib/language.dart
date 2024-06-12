@@ -53,3 +53,5 @@ const String activityInfo = 'Exercise, do chores, play sports, and go out and do
 const String screenTimeInfo = 'Limit time using phones, laptops, and other screens every day. The only goal where a lower behavior value is better! \nRecommended Level: < 2 hours (120 minutes)/day';
 const String fruitsVegetablesInfo = 'Eat more servings of fruits and vegetables for a healthier diet. \nRecommended Level: 5 servings/day';
 const String sleepInfo = 'Get a good night\'s rest to be productive and healthy. \nRecommended Level: 9-11 hours/night';
+const String sleepNotSaved = 'Your sleep goal/behavior couldn\'t be saved! Please contact the technical team.';
+const String sleepSaved = 'Sleep goal/behavior saved successfully!';

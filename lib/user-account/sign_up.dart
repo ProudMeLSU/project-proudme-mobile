@@ -147,9 +147,7 @@ final Map<String, dynamic> _formData = {
       var response = await post(
         Uri.parse(sendEmail),
         body: emailParameters,
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: baseHttpHeader,
       );
 
       if (response.statusCode == 200) {

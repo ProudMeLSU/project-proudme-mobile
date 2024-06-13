@@ -44,9 +44,7 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
       var chatResponse = await post(
         Uri.parse(getChatReply),
         body: chatPayload,
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: baseHttpHeader,
       );
 
       if (chatResponse.statusCode == 200) {
@@ -56,17 +54,20 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
         });
 
         String payload = getEatingPayload(
-            goalValue, behaviorValue, widget.userId, feedback, reflection);
+            goalValue, behaviorValue, widget.userId, _feedback, reflection);
 
         var response = await post(
           Uri.parse(saveGoal),
           body: payload,
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: baseHttpHeader,
         );
 
-        if (response.statusCode == 200) {
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          await post(
+            Uri.parse(saveGoal),
+            body: payload,
+            headers: baseHttpHeader,
+          );
           showCustomToast(context, eatingSaved, Theme.of(context).primaryColor);
         } else {
           showCustomToast(context, eatingNotSaved, errorColor);
@@ -106,7 +107,7 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
             _behaviorController.text = _eatingData['behaviorValue'].toString();
             _reflectionController.text = _eatingData['reflection'];
             setState(() {
-              _feedback = _eatingData['feedback'];
+              _feedback = _eatingData['feedback'] ?? '';
             });
           }
         } else {

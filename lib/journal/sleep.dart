@@ -48,9 +48,7 @@ class _SleepCardState extends State<SleepCard> {
       var chatResponse = await post(
         Uri.parse(getChatReply),
         body: chatPayload,
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: baseHttpHeader,
       );
 
       if (chatResponse.statusCode == 200) {
@@ -60,17 +58,20 @@ class _SleepCardState extends State<SleepCard> {
         });
 
         String payload = getSleepPayload(goalHour, goalMinute, behaviorHour,
-            behaviorMinute, widget.userId, feedback, reflection);
+            behaviorMinute, widget.userId, _feedback, reflection);
 
         var response = await post(
           Uri.parse(saveGoal),
           body: payload,
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: baseHttpHeader,
         );
 
-        if (response.statusCode == 200) {
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          await post(
+            Uri.parse(saveGoal),
+            body: payload,
+            headers: baseHttpHeader,
+          );
           showCustomToast(context, sleepSaved, Theme.of(context).primaryColor);
         } else {
           showCustomToast(context, sleepNotSaved, errorColor);

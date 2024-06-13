@@ -65,3 +65,6 @@ const List<String> screenTimeType = ['Academic', 'Gaming & Video Chatting'];
 const dateFormat = 'M/d/yyyy';
 const recommendedSleepValue = 9;
 const recommendedEatingValue = 5;
+const baseHttpHeader = {
+  'Content-Type': 'application/json',
+};

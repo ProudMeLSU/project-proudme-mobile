@@ -54,9 +54,7 @@ class _SignInScreenState extends State<SignInScreen> {
       var response = await post(
         Uri.parse(login),
         body: jsonData,
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: baseHttpHeader,
       );
 
       if (response.statusCode == 200) {

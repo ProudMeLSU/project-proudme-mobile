@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:project_proud_me/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart'
     show SharedPreferences;
@@ -166,4 +167,17 @@ String getChatbotPayloadForEating(
   };
 
   return jsonEncode(payload);
+}
+
+String calculateTimeDifference(TimeOfDay startTime, TimeOfDay endTime) {
+  int startMinutes = startTime.hour * 60 + startTime.minute;
+  int endMinutes = endTime.hour * 60 + endTime.minute;
+
+  int difference = endMinutes - startMinutes;
+
+  if (difference < 0) {
+    difference = 24 * 60 + difference;
+  }
+
+  return difference.toString();
 }

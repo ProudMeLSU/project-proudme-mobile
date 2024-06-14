@@ -20,238 +20,72 @@ class SleepCard extends StatefulWidget {
 }
 
 class _SleepCardState extends State<SleepCard> {
-  final TextEditingController _goalHourController = TextEditingController();
-  final TextEditingController _goalMinuteController = TextEditingController();
-  final TextEditingController _behaviorHourController = TextEditingController();
-  final TextEditingController _behaviorMinuteController =
-      TextEditingController();
+  TimeOfDay _selectedGoalBedTime = TimeOfDay.now();
+  TimeOfDay _selectedGoalWakeUpTime = TimeOfDay.now();
+
+  TimeOfDay _selectedBehaviorBedTime = TimeOfDay.now();
+  TimeOfDay _selectedBehaviorWakeUpTime = TimeOfDay.now();
+
   final TextEditingController _reflectionController = TextEditingController();
   bool _isLoading = false;
-  late Map<String, dynamic> _sleepData;
-  late String _feedback;
 
-  void onSave() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    String goalHour = _goalHourController.text;
-    String goalMinute = _goalMinuteController.text;
-    String behaviorHour = _behaviorHourController.text;
-    String behaviorMinute = _behaviorMinuteController.text;
-    String reflection = _reflectionController.text;
-
-    try {
-      String chatPayload = getChatbotPayloadForSleep(
-          goalHour, goalMinute, behaviorHour, behaviorMinute, reflection);
-
-      var chatResponse = await post(
-        Uri.parse(getChatReply),
-        body: chatPayload,
-        headers: baseHttpHeader,
-      );
-
-      if (chatResponse.statusCode == 200) {
-        String feedback = jsonDecode(chatResponse.body)['chat_reply'];
-        setState(() {
-          _feedback = feedback;
-        });
-
-        String payload = getSleepPayload(goalHour, goalMinute, behaviorHour,
-            behaviorMinute, widget.userId, _feedback, reflection);
-
-        var response = await post(
-          Uri.parse(saveGoal),
-          body: payload,
-          headers: baseHttpHeader,
-        );
-
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          await post(
-            Uri.parse(saveGoal),
-            body: payload,
-            headers: baseHttpHeader,
-          );
-          showCustomToast(context, sleepSaved, Theme.of(context).primaryColor);
-        } else {
-          showCustomToast(context, sleepNotSaved, errorColor);
-        }
-      } else {
-        showCustomToast(context, sleepNotSaved, errorColor);
-      }
-    } catch (e) {
-      showCustomToast(context, e.toString(), errorColor);
-    } finally {
+  Future<void> _selectGoalBedTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(
+          context: context,
+          initialTime: _selectedGoalBedTime,
+        ) ??
+        TimeOfDay.now();
+    if (picked != _selectedGoalBedTime) {
       setState(() {
-        _isLoading = false;
+        _selectedGoalBedTime = picked;
       });
     }
+  }
+
+  Future<void> _selectGoalWakeUpTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(
+          context: context,
+          initialTime: _selectedGoalWakeUpTime,
+        ) ??
+        TimeOfDay.now();
+    if (picked != _selectedGoalWakeUpTime) {
+      setState(() {
+        _selectedGoalWakeUpTime = picked;
+      });
+    }
+  }
+
+    Future<void> _selectBehaviorBedTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(
+          context: context,
+          initialTime: _selectedBehaviorBedTime,
+        ) ??
+        TimeOfDay.now();
+    if (picked != _selectedBehaviorBedTime) {
+      setState(() {
+        _selectedBehaviorBedTime = picked;
+      });
+    }
+  }
+
+  Future<void> _selectBehaviorWakeUpTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(
+          context: context,
+          initialTime: _selectedBehaviorWakeUpTime,
+        ) ??
+        TimeOfDay.now();
+    if (picked != _selectedBehaviorWakeUpTime) {
+      setState(() {
+        _selectedBehaviorWakeUpTime = picked;
+      });
+    }
+  }
+
+  void onSave() async {
+
   }
 
   Future<void> _fetchDataAndSetControllers() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      String queryString =
-          getQueryParamsForGoalEndpoints(widget.userId, 'sleep');
-
-      final response = await get(Uri.parse('$getGoal?$queryString'));
-
-      if (response.statusCode == 200) {
-        List<dynamic> responseBody = json.decode(response.body);
-
-        if (responseBody.isNotEmpty) {
-          setState(() {
-            _sleepData = responseBody.first as Map<String, dynamic>;
-          });
-          if (isToday(_sleepData['dateToday'])) {
-            double goal = toDouble(_sleepData['goalValue']);
-            double behavior = toDouble(_sleepData['behaviorValue']);
-            _goalHourController.text = getHourFromResponse(goal);
-            _goalMinuteController.text = getMinuteFromResponse(goal);
-            _behaviorHourController.text = getHourFromResponse(behavior);
-            _behaviorMinuteController.text = getMinuteFromResponse(behavior);
-            _reflectionController.text = _sleepData['reflection'];
-            setState(() {
-              _feedback = _sleepData['feedback'];
-            });
-          }
-        } else {
-          setState(() {
-            _sleepData = {};
-            _feedback = '';
-          });
-          _goalHourController.text = 0.toString();
-          _goalMinuteController.text = 0.toString();
-          _behaviorHourController.text = 0.toString();
-          _behaviorMinuteController.text = 0.toString();
-        }
-      }
-    } catch (e) {
-      showCustomToast(context, e.toString(), errorColor);
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  String calculateTotalGoal() {
-    int total = 0;
-
-    if (_goalHourController.text.isNotEmpty) {
-      int value = int.tryParse(_goalHourController.text)! * 60;
-      total += value;
-    }
-
-    if (_goalMinuteController.text.isNotEmpty) {
-      int value = int.tryParse(_goalMinuteController.text)!;
-      total += value;
-    }
-
-    return total.toString();
-  }
-
-  String calculateTotalBehavior() {
-    int total = 0;
-
-    if (_behaviorHourController.text.isNotEmpty) {
-      int value = int.tryParse(_behaviorHourController.text)! * 60;
-      total += value;
-    }
-
-    if (_behaviorMinuteController.text.isNotEmpty) {
-      int value = int.tryParse(_behaviorMinuteController.text)!;
-      total += value;
-    }
-
-    return total.toString();
-  }
-
-  void incrementGoalHour() {
-    setState(() {
-      if (_goalHourController.text.isEmpty) {
-        _goalHourController.text = 1.toString();
-      } else {
-        _goalHourController.text =
-            (int.parse(_goalHourController.text) + 1).toString();
-      }
-    });
-  }
-
-  void incrementBehaviorHour() {
-    setState(() {
-      if (_behaviorHourController.text.isEmpty) {
-        _behaviorHourController.text = 1.toString();
-      } else {
-        _behaviorHourController.text =
-            (int.parse(_behaviorHourController.text) + 1).toString();
-      }
-    });
-  }
-
-  void incrementGoalMinute() {
-    setState(() {
-      if (_goalMinuteController.text.isEmpty) {
-        _goalMinuteController.text = 1.toString();
-      } else {
-        _goalMinuteController.text =
-            (int.parse(_goalMinuteController.text) + 1).toString();
-      }
-    });
-  }
-
-  void incrementBehaviorMinute() {
-    setState(() {
-      if (_behaviorMinuteController.text.isEmpty) {
-        _behaviorMinuteController.text = 1.toString();
-      } else {
-        _behaviorMinuteController.text =
-            (int.parse(_behaviorMinuteController.text) + 1).toString();
-      }
-    });
-  }
-
-  void decrementGoalHour() {
-    setState(() {
-      if (_goalHourController.text.isNotEmpty &&
-          int.parse(_goalHourController.text) > 0) {
-        _goalHourController.text =
-            (int.parse(_goalHourController.text) - 1).toString();
-      }
-    });
-  }
-
-  void decrementBehaviorHour() {
-    setState(() {
-      if (_behaviorHourController.text.isNotEmpty &&
-          int.parse(_behaviorHourController.text) > 0) {
-        _behaviorHourController.text =
-            (int.parse(_behaviorHourController.text) - 1).toString();
-      }
-    });
-  }
-
-  void decrementGoalMinute() {
-    setState(() {
-      if (_goalMinuteController.text.isNotEmpty &&
-          int.parse(_goalMinuteController.text) > 0) {
-        _goalMinuteController.text =
-            (int.parse(_goalMinuteController.text) - 1).toString();
-      }
-    });
-  }
-
-  void decrementBehaviorMinute() {
-    setState(() {
-      if (_behaviorMinuteController.text.isNotEmpty &&
-          int.parse(_behaviorMinuteController.text) > 0) {
-        _behaviorMinuteController.text =
-            (int.parse(_behaviorMinuteController.text) - 1).toString();
-      }
-    });
   }
 
   @override
@@ -350,89 +184,45 @@ class _SleepCardState extends State<SleepCard> {
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).primaryColor,
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      child: IconButton(
-                                        icon: const Icon(Icons.remove),
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          decrementGoalHour();
-                                        },
-                                      ),
+                                  children: <Widget>[
+                                    const Text(
+                                      'Bed Time:',
+                                      style: TextStyle(fontSize: 20),
                                     ),
                                     const SizedBox(width: 10),
-                                    Expanded(
-                                      child: TextFormField(
-                                        controller: _goalHourController,
-                                        decoration: const InputDecoration(
-                                            labelText: 'Hours'),
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
-                                      ),
+                                    Text(
+                                      '${_selectedGoalBedTime.hour}:${_selectedGoalBedTime.minute}',
+                                      style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    const SizedBox(width: 10),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).primaryColor,
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      child: IconButton(
-                                        icon: const Icon(Icons.add),
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          incrementGoalHour();
-                                        },
-                                      ),
+                                    const SizedBox(width: 20),
+                                    ElevatedButton(
+                                      onPressed: () =>
+                                          _selectGoalBedTime(context),
+                                      child: const Text('Select'),
                                     ),
                                   ],
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).primaryColor,
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      child: IconButton(
-                                        icon: const Icon(Icons.remove),
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          decrementGoalMinute();
-                                        },
-                                      ),
+                                  children: <Widget>[
+                                    const Text(
+                                      'Wake up Time:',
+                                      style: TextStyle(fontSize: 20),
                                     ),
                                     const SizedBox(width: 10),
-                                    Expanded(
-                                      child: TextFormField(
-                                        controller: _goalMinuteController,
-                                        decoration: const InputDecoration(
-                                            labelText: 'Minutes'),
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
-                                      ),
+                                    Text(
+                                      '${_selectedGoalWakeUpTime.hour}:${_selectedGoalWakeUpTime.minute}',
+                                      style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    const SizedBox(width: 10),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).primaryColor,
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      child: IconButton(
-                                        icon: const Icon(Icons.add),
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          incrementGoalMinute();
-                                        },
-                                      ),
+                                    const SizedBox(width: 20),
+                                    ElevatedButton(
+                                      onPressed: () =>
+                                          _selectGoalWakeUpTime(context),
+                                      child: const Text('Select'),
                                     ),
                                   ],
                                 ),
@@ -440,7 +230,7 @@ class _SleepCardState extends State<SleepCard> {
                                   height: 10,
                                 ),
                                 Text(
-                                  'Total Goal: ${calculateTotalGoal()} Minutes',
+                                  'Total Goal: ${calculateTimeDifference(_selectedGoalBedTime, _selectedGoalWakeUpTime)} Minutes',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 20,
@@ -465,89 +255,45 @@ class _SleepCardState extends State<SleepCard> {
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).primaryColor,
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      child: IconButton(
-                                        icon: const Icon(Icons.remove),
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          decrementBehaviorHour();
-                                        },
-                                      ),
+                                  children: <Widget>[
+                                    const Text(
+                                      'Bed Time:',
+                                      style: TextStyle(fontSize: 20),
                                     ),
                                     const SizedBox(width: 10),
-                                    Expanded(
-                                      child: TextFormField(
-                                        controller: _behaviorHourController,
-                                        decoration: const InputDecoration(
-                                            labelText: 'Hours'),
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
-                                      ),
+                                    Text(
+                                      '${_selectedBehaviorBedTime.hour}:${_selectedBehaviorBedTime.minute}',
+                                      style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    const SizedBox(width: 10),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).primaryColor,
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      child: IconButton(
-                                        icon: const Icon(Icons.add),
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          incrementBehaviorHour();
-                                        },
-                                      ),
+                                    const SizedBox(width: 20),
+                                    ElevatedButton(
+                                      onPressed: () =>
+                                          _selectBehaviorBedTime(context),
+                                      child: const Text('Select'),
                                     ),
                                   ],
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).primaryColor,
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      child: IconButton(
-                                        icon: const Icon(Icons.remove),
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          decrementBehaviorMinute();
-                                        },
-                                      ),
+                                  children: <Widget>[
+                                    const Text(
+                                      'Wake up Time:',
+                                      style: TextStyle(fontSize: 20),
                                     ),
                                     const SizedBox(width: 10),
-                                    Expanded(
-                                      child: TextFormField(
-                                        controller: _behaviorMinuteController,
-                                        decoration: const InputDecoration(
-                                            labelText: 'Minutes'),
-                                        keyboardType: TextInputType.number,
-                                        inputFormatters: <TextInputFormatter>[
-                                          FilteringTextInputFormatter.digitsOnly
-                                        ],
-                                      ),
+                                    Text(
+                                      '${_selectedBehaviorWakeUpTime.hour}:${_selectedBehaviorWakeUpTime.minute}',
+                                      style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    const SizedBox(width: 10),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).primaryColor,
-                                        borderRadius: BorderRadius.circular(24),
-                                      ),
-                                      child: IconButton(
-                                        icon: const Icon(Icons.add),
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          incrementBehaviorMinute();
-                                        },
-                                      ),
+                                    const SizedBox(width: 20),
+                                    ElevatedButton(
+                                      onPressed: () =>
+                                          _selectBehaviorWakeUpTime(context),
+                                      child: const Text('Select'),
                                     ),
                                   ],
                                 ),
@@ -555,7 +301,7 @@ class _SleepCardState extends State<SleepCard> {
                                   height: 10,
                                 ),
                                 Text(
-                                  'Total Behavior: ${calculateTotalBehavior()} Minutes',
+                                  'Total Behavior: ${calculateTimeDifference(_selectedBehaviorBedTime, _selectedBehaviorWakeUpTime)} Minutes',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 20,
@@ -601,9 +347,9 @@ class _SleepCardState extends State<SleepCard> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                Text(
-                                  _feedback,
-                                  style: const TextStyle(
+                                const Text(
+                                  '',
+                                  style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: fontFamily,
                                   ),

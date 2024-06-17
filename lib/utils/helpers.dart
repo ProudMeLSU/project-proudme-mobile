@@ -181,3 +181,13 @@ String calculateTimeDifference(TimeOfDay startTime, TimeOfDay endTime) {
 
   return difference.toString();
 }
+
+String getTimeToDisplay(TimeOfDay time) {
+  return '${time.hourOfPeriod}:${getDoubleDigitMinute(time.minute)} ${time.period.name}';
+}
+
+String getDoubleDigitMinute(int timeOfDayMinute) {
+  String minute = timeOfDayMinute.toString();
+
+  return minute.length == 1 ? '0$minute' : minute;
+}

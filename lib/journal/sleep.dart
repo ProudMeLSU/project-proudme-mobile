@@ -191,7 +191,7 @@ class _SleepCardState extends State<SleepCard> {
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
-                                      '${_selectedGoalBedTime.hour}:${_selectedGoalBedTime.minute}',
+                                      getTimeToDisplay(_selectedGoalBedTime),
                                       style: const TextStyle(
                                           fontSize: 24,
                                           fontWeight: FontWeight.bold),
@@ -213,7 +213,7 @@ class _SleepCardState extends State<SleepCard> {
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
-                                      '${_selectedGoalWakeUpTime.hour}:${_selectedGoalWakeUpTime.minute}',
+                                      getTimeToDisplay(_selectedGoalWakeUpTime),
                                       style: const TextStyle(
                                           fontSize: 24,
                                           fontWeight: FontWeight.bold),
@@ -262,7 +262,7 @@ class _SleepCardState extends State<SleepCard> {
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
-                                      '${_selectedBehaviorBedTime.hour}:${_selectedBehaviorBedTime.minute}',
+                                      getTimeToDisplay(_selectedBehaviorBedTime),
                                       style: const TextStyle(
                                           fontSize: 24,
                                           fontWeight: FontWeight.bold),
@@ -284,7 +284,7 @@ class _SleepCardState extends State<SleepCard> {
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
-                                      '${_selectedBehaviorWakeUpTime.hour}:${_selectedBehaviorWakeUpTime.minute}',
+                                      getTimeToDisplay(_selectedBehaviorWakeUpTime),
                                       style: const TextStyle(
                                           fontSize: 24,
                                           fontWeight: FontWeight.bold),

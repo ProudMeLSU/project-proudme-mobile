@@ -55,7 +55,7 @@ class _SleepCardState extends State<SleepCard> {
     }
   }
 
-    Future<void> _selectBehaviorBedTime(BuildContext context) async {
+  Future<void> _selectBehaviorBedTime(BuildContext context) async {
     final TimeOfDay picked = await showTimePicker(
           context: context,
           initialTime: _selectedBehaviorBedTime,
@@ -81,12 +81,9 @@ class _SleepCardState extends State<SleepCard> {
     }
   }
 
-  void onSave() async {
+  void onSave() async {}
 
-  }
-
-  Future<void> _fetchDataAndSetControllers() async {
-  }
+  Future<void> _fetchDataAndSetControllers() async {}
 
   @override
   void initState() {
@@ -187,14 +184,18 @@ class _SleepCardState extends State<SleepCard> {
                                   children: <Widget>[
                                     const Text(
                                       'Bed Time:',
-                                      style: TextStyle(fontSize: 20),
+                                      style: TextStyle(
+                                        fontFamily: fontFamily,
+                                      ),
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
                                       getTimeToDisplay(_selectedGoalBedTime),
                                       style: const TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: fontFamily,
+                                      ),
                                     ),
                                     const SizedBox(width: 20),
                                     ElevatedButton(
@@ -209,14 +210,18 @@ class _SleepCardState extends State<SleepCard> {
                                   children: <Widget>[
                                     const Text(
                                       'Wake up Time:',
-                                      style: TextStyle(fontSize: 20),
+                                      style: TextStyle(
+                                        fontFamily: fontFamily,
+                                      ),
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
                                       getTimeToDisplay(_selectedGoalWakeUpTime),
                                       style: const TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: fontFamily,
+                                      ),
                                     ),
                                     const SizedBox(width: 20),
                                     ElevatedButton(
@@ -258,14 +263,18 @@ class _SleepCardState extends State<SleepCard> {
                                   children: <Widget>[
                                     const Text(
                                       'Bed Time:',
-                                      style: TextStyle(fontSize: 20),
+                                      style: TextStyle(
+                                        fontFamily: fontFamily,
+                                      ),
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
-                                      getTimeToDisplay(_selectedBehaviorBedTime),
+                                      getTimeToDisplay(
+                                          _selectedBehaviorBedTime),
                                       style: const TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: fontFamily),
                                     ),
                                     const SizedBox(width: 20),
                                     ElevatedButton(
@@ -280,14 +289,17 @@ class _SleepCardState extends State<SleepCard> {
                                   children: <Widget>[
                                     const Text(
                                       'Wake up Time:',
-                                      style: TextStyle(fontSize: 20),
+                                      style: TextStyle(fontFamily: fontFamily),
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
-                                      getTimeToDisplay(_selectedBehaviorWakeUpTime),
+                                      getTimeToDisplay(
+                                          _selectedBehaviorWakeUpTime),
                                       style: const TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: fontFamily,
+                                      ),
                                     ),
                                     const SizedBox(width: 20),
                                     ElevatedButton(

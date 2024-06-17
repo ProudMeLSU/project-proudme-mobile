@@ -62,6 +62,8 @@ const Map<String, List<String>> activityTypes = {
 };
 
 const List<String> screenTimeType = ['Academic', 'Gaming & Video Chatting'];
+const List<String> eatingType = ['Fruits', 'Vegetables'];
+
 const dateFormat = 'M/d/yyyy';
 const recommendedSleepValue = 9;
 const recommendedEatingValue = 5;

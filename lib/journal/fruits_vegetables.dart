@@ -21,149 +21,104 @@ class FruitsVegetablesCard extends StatefulWidget {
 }
 
 class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
-  final TextEditingController _goalController = TextEditingController();
-  final TextEditingController _behaviorController = TextEditingController();
+  late Map<String, TextEditingController> _goalControllers;
+  late Map<String, TextEditingController> _behaviorControllers;
+
+  TextEditingController _goalController = TextEditingController();
+  TextEditingController _behaviorController = TextEditingController();
   final TextEditingController _reflectionController = TextEditingController();
   bool _isLoading = false;
   late Map<String, dynamic> _eatingData;
-  late String _feedback;
+  String _feedback = '';
+  String _selectedEatingType = '';
 
-  void onSave() async {
-    setState(() {
-      _isLoading = true;
+  String calculateTotalGoal() {
+    int total = 0;
+    _goalControllers.forEach((key, controller) {
+      if (controller.text.isNotEmpty) {
+        int value = int.tryParse(controller.text)!;
+        total += value;
+      }
     });
 
-    String goalValue = _goalController.text;
-    String behaviorValue = _behaviorController.text;
-    String reflection = _reflectionController.text;
-
-    try {
-      String chatPayload =
-          getChatbotPayloadForEating(goalValue, behaviorValue, reflection);
-
-      var chatResponse = await post(
-        Uri.parse(getChatReply),
-        body: chatPayload,
-        headers: baseHttpHeader,
-      );
-
-      if (chatResponse.statusCode == 200) {
-        String feedback = jsonDecode(chatResponse.body)['chat_reply'];
-        setState(() {
-          _feedback = feedback;
-        });
-
-        String payload = getEatingPayload(
-            goalValue, behaviorValue, widget.userId, _feedback, reflection);
-
-        var response = await post(
-          Uri.parse(saveGoal),
-          body: payload,
-          headers: baseHttpHeader,
-        );
-
-        if (response.statusCode == 200 || response.statusCode == 201) {
-          await post(
-            Uri.parse(saveGoal),
-            body: payload,
-            headers: baseHttpHeader,
-          );
-          showCustomToast(context, eatingSaved, Theme.of(context).primaryColor);
-        } else {
-          showCustomToast(context, eatingNotSaved, errorColor);
-        }
-      } else {
-        showCustomToast(context, eatingNotSaved, errorColor);
-      }
-    } catch (e) {
-      showCustomToast(context, e.toString(), errorColor);
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
+    return total.toString();
   }
 
-  Future<void> _fetchDataAndSetControllers() async {
-    setState(() {
-      _isLoading = true;
+  String calculateTotalBehavior() {
+    int total = 0;
+
+    _behaviorControllers.forEach((key, controller) {
+      if (controller.text.isNotEmpty) {
+        int value = int.tryParse(controller.text)!;
+        total += value;
+      }
     });
 
-    try {
-      String queryString =
-          getQueryParamsForGoalEndpoints(widget.userId, 'eating');
+    return total.toString();
+  }
 
-      final response = await get(Uri.parse('$getGoal?$queryString'));
+  void _initGoalControllers() {
+    _goalControllers = {};
+    eatingType.forEach((type) {
+      _goalControllers[type] = TextEditingController();
+      _goalControllers[type]!.text = 0.toString();
+    });
+  }
 
-      if (response.statusCode == 200) {
-        List<dynamic> responseBody = json.decode(response.body);
-
-        if (responseBody.isNotEmpty) {
-          setState(() {
-            _eatingData = responseBody.first as Map<String, dynamic>;
-          });
-          if (isToday(_eatingData['dateToday'])) {
-            _goalController.text = _eatingData['goalValue'].toString();
-            _behaviorController.text = _eatingData['behaviorValue'].toString();
-            _reflectionController.text = _eatingData['reflection'];
-            setState(() {
-              _feedback = _eatingData['feedback'] ?? '';
-            });
-          }
-        } else {
-          setState(() {
-            _eatingData = {};
-            _feedback = '';
-          });
-          _goalController.text = 0.toString();
-          _behaviorController.text = 0.toString();
-        }
-      }
-    } catch (e) {
-      showCustomToast(context, e.toString(), errorColor);
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
+  void _initBehaviorControllers() {
+    _behaviorControllers = {};
+    eatingType.forEach((type) {
+      _behaviorControllers[type] = TextEditingController();
+      _behaviorControllers[type]!.text = 0.toString();
+    });
   }
 
   void incrementGoalServing() {
     setState(() {
-      if (_goalController.text.isEmpty) {
-        _goalController.text = 1.toString();
-      } else {
-        _goalController.text = (int.parse(_goalController.text) + 1).toString();
+      if (_selectedEatingType != '') {
+        if (_goalController.text.isEmpty) {
+          _goalController.text = 1.toString();
+        } else {
+          _goalController.text =
+              (int.parse(_goalController.text) + 1).toString();
+        }
       }
     });
   }
 
   void incrementBehaviorServing() {
     setState(() {
-      if (_behaviorController.text.isEmpty) {
-        _behaviorController.text = 1.toString();
-      } else {
-        _behaviorController.text =
-            (int.parse(_behaviorController.text) + 1).toString();
+      if (_selectedEatingType != '') {
+        if (_behaviorController.text.isEmpty) {
+          _behaviorController.text = 1.toString();
+        } else {
+          _behaviorController.text =
+              (int.parse(_behaviorController.text) + 1).toString();
+        }
       }
     });
   }
 
   void decrementGoalServing() {
     setState(() {
-      if (_goalController.text.isNotEmpty &&
-          int.parse(_goalController.text) > 0) {
-        _goalController.text = (int.parse(_goalController.text) - 1).toString();
+      if (_selectedEatingType != '') {
+        if (_goalController.text.isNotEmpty &&
+            int.parse(_goalController.text) > 0) {
+          _goalController.text =
+              (int.parse(_goalController.text) - 1).toString();
+        }
       }
     });
   }
 
   void decrementBehaviorServing() {
     setState(() {
-      if (_behaviorController.text.isNotEmpty &&
-          int.parse(_behaviorController.text) > 0) {
-        _behaviorController.text =
-            (int.parse(_behaviorController.text) - 1).toString();
+      if (_selectedEatingType != '') {
+        if (_behaviorController.text.isNotEmpty &&
+            int.parse(_behaviorController.text) > 0) {
+          _behaviorController.text =
+              (int.parse(_behaviorController.text) - 1).toString();
+        }
       }
     });
   }
@@ -171,7 +126,8 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
   @override
   void initState() {
     super.initState();
-    _fetchDataAndSetControllers();
+    _initGoalControllers();
+    _initBehaviorControllers();
   }
 
   @override
@@ -253,6 +209,31 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
                                   ],
                                 ),
                                 const Divider(),
+                                DropdownButtonFormField<String>(
+                                  decoration: const InputDecoration(
+                                      labelText: 'Select eating type.'),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedEatingType = value!;
+                                      _goalController = _goalControllers[
+                                          _selectedEatingType]!;
+                                      _behaviorController =
+                                          _behaviorControllers[
+                                              _selectedEatingType]!;
+                                    });
+                                  },
+                                  items: eatingType
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
                                 Text(
                                   'Set My Goal',
                                   textAlign: TextAlign.center,
@@ -309,6 +290,16 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
                                 ),
                                 const SizedBox(
                                   height: 10,
+                                ),
+                                Text(
+                                  'Total Goal: ${calculateTotalGoal()} Servings',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: fontFamily,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
                                 ),
                                 const Divider(),
                                 const SizedBox(
@@ -371,6 +362,16 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
                                 const SizedBox(
                                   height: 10,
                                 ),
+                                Text(
+                                  'Total Behavior: ${calculateTotalBehavior()} Servings',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: fontFamily,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
                                 const Divider(),
                                 const SizedBox(
                                   height: 10,
@@ -432,9 +433,7 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
                           height: 5,
                         ),
                         ElevatedButton(
-                          onPressed: () {
-                            onSave();
-                          },
+                          onPressed: () {},
                           style: ButtonStyle(
                             backgroundColor: WidgetStateProperty.all<Color>(
                                 const Color(0xfff5b342)),

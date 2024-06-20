@@ -33,6 +33,7 @@ class _SleepCardState extends State<SleepCard> {
     final TimeOfDay picked = await showTimePicker(
           context: context,
           initialTime: _selectedGoalBedTime,
+          helpText: 'Bed Time'
         ) ??
         TimeOfDay.now();
     if (picked != _selectedGoalBedTime) {
@@ -46,6 +47,7 @@ class _SleepCardState extends State<SleepCard> {
     final TimeOfDay picked = await showTimePicker(
           context: context,
           initialTime: _selectedGoalWakeUpTime,
+          helpText: 'Wake up Time'
         ) ??
         TimeOfDay.now();
     if (picked != _selectedGoalWakeUpTime) {
@@ -59,6 +61,7 @@ class _SleepCardState extends State<SleepCard> {
     final TimeOfDay picked = await showTimePicker(
           context: context,
           initialTime: _selectedBehaviorBedTime,
+          helpText: 'Bed Time'
         ) ??
         TimeOfDay.now();
     if (picked != _selectedBehaviorBedTime) {
@@ -72,6 +75,7 @@ class _SleepCardState extends State<SleepCard> {
     final TimeOfDay picked = await showTimePicker(
           context: context,
           initialTime: _selectedBehaviorWakeUpTime,
+          helpText: 'Wake up Time'
         ) ??
         TimeOfDay.now();
     if (picked != _selectedBehaviorWakeUpTime) {
@@ -170,7 +174,7 @@ class _SleepCardState extends State<SleepCard> {
                                 ),
                                 const Divider(),
                                 Text(
-                                  'Set My Goal',
+                                  'Set My Sleep Goal',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 20,
@@ -201,7 +205,7 @@ class _SleepCardState extends State<SleepCard> {
                                     ElevatedButton(
                                       onPressed: () =>
                                           _selectGoalBedTime(context),
-                                      child: const Text('Select'),
+                                      child: const Text('Bed Time'),
                                     ),
                                   ],
                                 ),
@@ -227,7 +231,7 @@ class _SleepCardState extends State<SleepCard> {
                                     ElevatedButton(
                                       onPressed: () =>
                                           _selectGoalWakeUpTime(context),
-                                      child: const Text('Select'),
+                                      child: const Text('Wake up Time'),
                                     ),
                                   ],
                                 ),
@@ -249,7 +253,7 @@ class _SleepCardState extends State<SleepCard> {
                                   height: 10,
                                 ),
                                 Text(
-                                  'Track My Behaviour',
+                                  'Track My Sleep',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 20,
@@ -280,7 +284,7 @@ class _SleepCardState extends State<SleepCard> {
                                     ElevatedButton(
                                       onPressed: () =>
                                           _selectBehaviorBedTime(context),
-                                      child: const Text('Select'),
+                                      child: const Text('Bed Time'),
                                     ),
                                   ],
                                 ),
@@ -305,7 +309,7 @@ class _SleepCardState extends State<SleepCard> {
                                     ElevatedButton(
                                       onPressed: () =>
                                           _selectBehaviorWakeUpTime(context),
-                                      child: const Text('Select'),
+                                      child: const Text('Wake up Time'),
                                     ),
                                   ],
                                 ),
@@ -313,7 +317,7 @@ class _SleepCardState extends State<SleepCard> {
                                   height: 10,
                                 ),
                                 Text(
-                                  'Total Behavior: ${calculateTimeDifference(_selectedBehaviorBedTime, _selectedBehaviorWakeUpTime)} Minutes',
+                                  'Sleep Duration: ${calculateTimeDifference(_selectedBehaviorBedTime, _selectedBehaviorWakeUpTime)} Minutes',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 20,

@@ -20,9 +20,10 @@ class FruitsVegetablesCard extends StatefulWidget {
   _FruitsVegetablesCardState createState() => _FruitsVegetablesCardState();
 }
 
-class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
+class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> with SingleTickerProviderStateMixin{
   late Map<String, TextEditingController> _goalControllers;
   late Map<String, TextEditingController> _behaviorControllers;
+  late TabController _tabController;
 
   TextEditingController _goalController = TextEditingController();
   TextEditingController _behaviorController = TextEditingController();
@@ -30,7 +31,7 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
   bool _isLoading = false;
   late Map<String, dynamic> _eatingData;
   String _feedback = '';
-  String _selectedEatingType = '';
+  String _selectedEatingType = 'Fruits';
 
   String calculateTotalGoal() {
     int total = 0;
@@ -126,8 +127,17 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: eatingType.length, vsync: this);
     _initGoalControllers();
     _initBehaviorControllers();
+    _goalController = _goalControllers[_selectedEatingType]!;
+    _behaviorController = _behaviorControllers[_selectedEatingType]!;
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
@@ -209,27 +219,18 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> {
                                   ],
                                 ),
                                 const Divider(),
-                                DropdownButtonFormField<String>(
-                                  decoration: const InputDecoration(
-                                      labelText: 'Select eating type.'),
-                                  onChanged: (value) {
+                                TabBar(
+                                  controller: _tabController,
+                                  tabs: eatingType.map((String tab) {
+                                    return Tab(text: tab);
+                                  }).toList(),
+                                  onTap: (index) {
                                     setState(() {
-                                      _selectedEatingType = value!;
-                                      _goalController = _goalControllers[
-                                          _selectedEatingType]!;
-                                      _behaviorController =
-                                          _behaviorControllers[
-                                              _selectedEatingType]!;
+                                      _selectedEatingType = eatingType[index];
+                                      _goalController = _goalControllers[_selectedEatingType]!;
+                                      _behaviorController = _behaviorControllers[_selectedEatingType]!;
                                     });
                                   },
-                                  items: eatingType
-                                      .map<DropdownMenuItem<String>>(
-                                          (String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
                                 ),
                                 const SizedBox(
                                   height: 20,

@@ -205,7 +205,7 @@ class _SleepCardState extends State<SleepCard> {
                                     ElevatedButton(
                                       onPressed: () =>
                                           _selectGoalBedTime(context),
-                                      child: const Text('Bed Time'),
+                                      child: const Text('Select'),
                                     ),
                                   ],
                                 ),
@@ -231,7 +231,7 @@ class _SleepCardState extends State<SleepCard> {
                                     ElevatedButton(
                                       onPressed: () =>
                                           _selectGoalWakeUpTime(context),
-                                      child: const Text('Wake up Time'),
+                                      child: const Text('Select'),
                                     ),
                                   ],
                                 ),
@@ -284,7 +284,7 @@ class _SleepCardState extends State<SleepCard> {
                                     ElevatedButton(
                                       onPressed: () =>
                                           _selectBehaviorBedTime(context),
-                                      child: const Text('Bed Time'),
+                                      child: const Text('Select'),
                                     ),
                                   ],
                                 ),
@@ -309,7 +309,7 @@ class _SleepCardState extends State<SleepCard> {
                                     ElevatedButton(
                                       onPressed: () =>
                                           _selectBehaviorWakeUpTime(context),
-                                      child: const Text('Wake up Time'),
+                                      child: const Text('Select'),
                                     ),
                                   ],
                                 ),

@@ -132,28 +132,27 @@ final Map<String, dynamic> _formData = {
     }
 
     String jsonData = jsonEncode(_formData);
-    String requiredCode = generateRandomString(8);
-    
-    String emailParameters = getEmailParameters(requiredCode);
-    sendEmailAndRedirectToEmailVerificationOnSuccess(emailParameters, jsonData, requiredCode);
+
+    registerAndRedirectToEmailVerificationOnSuccess(jsonData);
   }
 
-  Future<void> sendEmailAndRedirectToEmailVerificationOnSuccess(String emailParameters, String jsonData, String requiredCode) async {
+  Future<void> registerAndRedirectToEmailVerificationOnSuccess(String jsonData) async {
     setState(() {
       _isLoading = true;
     });
 
     try {
       var response = await post(
-        Uri.parse(sendEmail),
-        body: emailParameters,
+        Uri.parse(register),
+        body: jsonData,
         headers: baseHttpHeader,
       );
 
       if (response.statusCode == 200) {
+        String email = _formData['email'];
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SignUpVerificationScreen(data: jsonData, requiredCode: requiredCode)),
+          MaterialPageRoute(builder: (context) => SignUpVerificationScreen(email: email)),
         );
       } 
     } catch (e) {

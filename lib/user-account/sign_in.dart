@@ -7,6 +7,7 @@ import 'package:project_proud_me/introduction/introduction.dart';
 import 'package:project_proud_me/language.dart';
 import 'package:project_proud_me/user-account/forgot_credentials.dart';
 import 'package:project_proud_me/user-account/sign_up.dart';
+import 'package:project_proud_me/user-account/sign_up_verification.dart';
 import 'package:project_proud_me/widgets/toast.dart';
 import 'package:shared_preferences/shared_preferences.dart' show SharedPreferences;
 
@@ -63,6 +64,12 @@ class _SignInScreenState extends State<SignInScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Introduction()),
+        );
+      } else if (response.statusCode == 403) {
+        String email = _formData['email'];
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SignUpVerificationScreen(email: email)),
         );
       } else if (response.statusCode == 401) {
         showCustomToast(context, invalidCredentials, errorColor);

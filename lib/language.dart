@@ -57,3 +57,5 @@ const String sleepNotSaved = 'Your sleep goal/behavior couldn\'t be saved! Pleas
 const String sleepSaved = 'Sleep goal/behavior saved successfully!';
 const String eatingNotSaved = 'Your eating goal/behavior couldn\'t be saved! Please contact the technical team.';
 const String eatingSaved = 'Eating goal/behavior saved successfully!';
+const String verificationCodeNotSent = 'Verification code couldn\'t be sent. Please contact the technical team.';
+const String resendCodeButtonText =  'Didn\'t receive code? Click here.';

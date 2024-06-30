@@ -79,13 +79,14 @@ const List<String> activityList = [
   'Easy Walking'
 ];
 
-const List<String> screenTimeType = ['Academic', 'Gaming & Video Chatting'];
+const List<String> screenTimeType = ['Academic', 'Non-Academic'];
 const List<String> eatingType = ['Fruits', 'Vegetables'];
 
 const dateFormat = 'M/d/yyyy';
 const recommendedSleepValue = 9;
 const recommendedEatingValue = 5;
 const recommendedPhysicalActivityValue = 60;
+const recommendedScreenTimeValue = 120;
 const baseHttpHeader = {
   'Content-Type': 'application/json',
 };

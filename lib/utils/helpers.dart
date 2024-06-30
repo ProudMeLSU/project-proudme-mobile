@@ -77,6 +77,57 @@ String getPhysicalActivityBehaviorPayload(
   return jsonEncode(payload);
 }
 
+String getScreenTimeBehaviorPayload(
+    Map<String, TextEditingController> goalHourController,
+    Map<String, TextEditingController> goalMinuteController,
+    Map<String, TextEditingController> behaviorHourController,
+    Map<String, TextEditingController> behaviorMinuteController,
+    String userId,
+    String feedback,
+    String reflection,
+    String totalGoal,
+    String totalBehavior) {
+  String date = getNowInFormat(dateFormat);
+  String dateToday = getNowInFormat('yyyy-MM-ddTHH:mm:ss.SSSZ');
+
+  int goalValue = int.parse(totalGoal);
+  int behaviorValue = int.parse(totalBehavior);
+
+  Map<String, dynamic> screentime = {};
+
+  screenTimeType.forEach((item) {
+    int goalHours = int.tryParse(goalHourController[item]!.text) ?? 0;
+    int goalMinutes = int.tryParse(goalMinuteController[item]!.text) ?? 0;
+
+    int behaviorHours = int.tryParse(behaviorHourController[item]!.text) ?? 0;
+    int behaviorMinutes =
+        int.tryParse(behaviorMinuteController[item]!.text) ?? 0;
+
+    screentime[item] = {
+      'goal': {'hours': goalHours, 'minutes': goalMinutes},
+      'behavior': {'hours': behaviorHours, 'minutes': behaviorMinutes},
+    };
+  });
+
+  bool goalStatus = behaviorValue >= goalValue;
+
+  Map<String, dynamic> payload = {
+    'behaviorValue': behaviorValue,
+    'goalValue': goalValue,
+    'reflection': reflection,
+    'feedback': feedback,
+    'date': date,
+    'goalStatus': goalStatus,
+    'user': userId,
+    'recommendedValue': recommendedScreenTimeValue,
+    'goalType': 'screentime',
+    'dateToday': dateToday,
+    'screentime': screentime
+  };
+
+  return jsonEncode(payload);
+}
+
 Future<Map<String, dynamic>> getUserFromSharedPreference() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return jsonDecode(prefs.getString(userDataKey) ?? '');
@@ -203,6 +254,28 @@ String getChatbotPayloadForPhysicalActivity(int totalGoal, int totalBehavior, St
 
   String content = "Health goal type: physical activity, "
       "Recommended value: $recommendedPhysicalActivityValue, "
+      "Actual Goal Value: ${totalGoal.toStringAsFixed(2)}, "
+      "Actual behavior value achieved: ${totalBehavior.toStringAsFixed(2)}, "
+      "percentage of actual goal achieved: ${percentageAchieved.toStringAsFixed(2)}%, "
+      "percentage of recommended goal achieved: ${percentageOfRecommendedGoal.toStringAsFixed(2)}%, "
+      "Reflection: $reflection.";
+
+  Map<String, List<Map<String, String>>> payload = {
+    'prompt': [
+      {'role': 'system', 'content': content}
+    ]
+  };
+
+  return jsonEncode(payload);
+}
+
+String getChatbotPayloadForScreenTime(int totalGoal, int totalBehavior, String reflection) {
+  double percentageAchieved = (totalBehavior / totalGoal) * 100;
+
+  double percentageOfRecommendedGoal = (totalBehavior / 9) * 100;
+
+  String content = "Health goal type: screen time, "
+      "Recommended value: $recommendedScreenTimeValue, "
       "Actual Goal Value: ${totalGoal.toStringAsFixed(2)}, "
       "Actual behavior value achieved: ${totalBehavior.toStringAsFixed(2)}, "
       "percentage of actual goal achieved: ${percentageAchieved.toStringAsFixed(2)}%, "

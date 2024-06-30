@@ -99,7 +99,7 @@ class _MyJournalScreenState extends State<MyJournalScreen> {
                           case 0:
                             return ActivityCard(userId: _userId,);
                           case 1:
-                            return ScreenTimeCard();
+                            return ScreenTimeCard(userId: _userId,);
                           case 2:
                             return FruitsVegetablesCard(
                               userId: _userId,

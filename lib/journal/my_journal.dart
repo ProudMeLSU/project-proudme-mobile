@@ -97,7 +97,7 @@ class _MyJournalScreenState extends State<MyJournalScreen> {
                       cardBuilder: (BuildContext context, int index) {
                         switch (index) {
                           case 0:
-                            return ActivityCard();
+                            return ActivityCard(userId: _userId,);
                           case 1:
                             return ScreenTimeCard();
                           case 2:

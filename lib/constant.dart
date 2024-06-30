@@ -61,12 +61,31 @@ const Map<String, List<String>> activityTypes = {
   'Mild': ['Yoga', 'Archery', 'Bowling', 'Golf', 'Easy Walking']
 };
 
+const List<String> activityList = [
+  'Running',
+  'Jogging',
+  'Football',
+  'Soccer',
+  'Basketball',
+  'Baseball',
+  'Tennis',
+  'Fast Walking',
+  'Volleyball',
+  'Badminton',
+  'Yoga',
+  'Archery',
+  'Bowling',
+  'Golf',
+  'Easy Walking'
+];
+
 const List<String> screenTimeType = ['Academic', 'Gaming & Video Chatting'];
 const List<String> eatingType = ['Fruits', 'Vegetables'];
 
 const dateFormat = 'M/d/yyyy';
 const recommendedSleepValue = 9;
 const recommendedEatingValue = 5;
+const recommendedPhysicalActivityValue = 60;
 const baseHttpHeader = {
   'Content-Type': 'application/json',
 };

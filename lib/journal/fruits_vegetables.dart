@@ -20,7 +20,8 @@ class FruitsVegetablesCard extends StatefulWidget {
   _FruitsVegetablesCardState createState() => _FruitsVegetablesCardState();
 }
 
-class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> with SingleTickerProviderStateMixin{
+class _FruitsVegetablesCardState extends State<FruitsVegetablesCard>
+    with SingleTickerProviderStateMixin {
   late Map<String, TextEditingController> _goalControllers;
   late Map<String, TextEditingController> _behaviorControllers;
   late TabController _tabController;
@@ -29,7 +30,6 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> with Single
   TextEditingController _behaviorController = TextEditingController();
   final TextEditingController _reflectionController = TextEditingController();
   bool _isLoading = false;
-  late Map<String, dynamic> _eatingData;
   String _feedback = '';
   String _selectedEatingType = 'Fruits';
 
@@ -56,6 +56,100 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> with Single
     });
 
     return total.toString();
+  }
+
+    void _fetchDataAndSetControllers() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      String queryString =
+          getQueryParamsForGoalEndpoints(widget.userId, 'eating');
+
+      final response = await get(Uri.parse('$getGoal?$queryString'));
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseBody = json.decode(response.body);
+        if (responseBody.isNotEmpty) {
+          var activityData = responseBody.first as Map<String, dynamic>;
+          _reflectionController.text = activityData['reflection'];
+          Map<String, dynamic> eating = activityData['servings'];
+          eatingType.forEach((item) {
+            _goalControllers[item]!.text =
+                eating[item]['goal'].toString();
+            _behaviorControllers[item]!.text =
+                eating[item]['behavior'].toString();
+          });
+          setState(() {
+            _feedback = activityData['feedback'];
+          });
+        }
+      }
+    } catch (e) {
+      showCustomToast(context, e.toString(), errorColor);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  void save() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      String totalGoal = calculateTotalGoal();
+      String totalBehavior = calculateTotalBehavior();
+      String chatPayload = getChatbotPayloadForEating(
+          totalGoal, totalBehavior, _reflectionController.text);
+      var chatResponse = await post(
+        Uri.parse(getChatReply),
+        body: chatPayload,
+        headers: baseHttpHeader,
+      );
+      if (chatResponse.statusCode == 200) {
+        String feedback = jsonDecode(chatResponse.body)['chat_reply'];
+        setState(() {
+          _feedback = feedback;
+        });
+        String jsonData = getEatingBehaviorPayload(
+            _goalControllers,
+            _behaviorControllers,
+            widget.userId,
+            _feedback,
+            _reflectionController.text,
+            totalGoal,
+            totalBehavior);
+        var response = await post(
+          Uri.parse(saveGoal),
+          body: jsonData,
+          headers: baseHttpHeader,
+        );
+
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          await post(
+            Uri.parse(saveGoal),
+            body: jsonData,
+            headers: baseHttpHeader,
+          );
+
+          showCustomToast(context, eatingSaved,
+              Theme.of(context).primaryColor);
+        } else if (response.statusCode == 400) {
+          showCustomToast(
+              context, eatingNotSaved, errorColor);
+        }
+      }
+    } catch (e) {
+      showCustomToast(context, e.toString(), errorColor);
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   void _initGoalControllers() {
@@ -132,6 +226,7 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> with Single
     _initBehaviorControllers();
     _goalController = _goalControllers[_selectedEatingType]!;
     _behaviorController = _behaviorControllers[_selectedEatingType]!;
+    _fetchDataAndSetControllers();
   }
 
   @override
@@ -227,8 +322,11 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> with Single
                                   onTap: (index) {
                                     setState(() {
                                       _selectedEatingType = eatingType[index];
-                                      _goalController = _goalControllers[_selectedEatingType]!;
-                                      _behaviorController = _behaviorControllers[_selectedEatingType]!;
+                                      _goalController = _goalControllers[
+                                          _selectedEatingType]!;
+                                      _behaviorController =
+                                          _behaviorControllers[
+                                              _selectedEatingType]!;
                                     });
                                   },
                                 ),
@@ -434,7 +532,9 @@ class _FruitsVegetablesCardState extends State<FruitsVegetablesCard> with Single
                           height: 5,
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            save();
+                          },
                           style: ButtonStyle(
                             backgroundColor: WidgetStateProperty.all<Color>(
                                 const Color(0xfff5b342)),

@@ -128,6 +128,51 @@ String getScreenTimeBehaviorPayload(
   return jsonEncode(payload);
 }
 
+String getEatingBehaviorPayload(
+    Map<String, TextEditingController> goalController,
+    Map<String, TextEditingController> behaviorController,
+    String userId,
+    String feedback,
+    String reflection,
+    String totalGoal,
+    String totalBehavior) {
+  String date = getNowInFormat(dateFormat);
+  String dateToday = getNowInFormat('yyyy-MM-ddTHH:mm:ss.SSSZ');
+
+  int goalValue = int.parse(totalGoal);
+  int behaviorValue = int.parse(totalBehavior);
+
+  Map<String, dynamic> eating = {};
+
+  eatingType.forEach((item) {
+    int goal = int.tryParse(goalController[item]!.text) ?? 0;
+    int behavior = int.tryParse(behaviorController[item]!.text) ?? 0;
+
+    eating[item] = {
+      'goal': goal,
+      'behavior': behavior,
+    };
+  });
+
+  bool goalStatus = behaviorValue >= goalValue;
+
+  Map<String, dynamic> payload = {
+    'behaviorValue': behaviorValue,
+    'goalValue': goalValue,
+    'reflection': reflection,
+    'feedback': feedback,
+    'date': date,
+    'goalStatus': goalStatus,
+    'user': userId,
+    'recommendedValue': recommendedScreenTimeValue,
+    'goalType': 'eating',
+    'dateToday': dateToday,
+    'servings': eating
+  };
+
+  return jsonEncode(payload);
+}
+
 Future<Map<String, dynamic>> getUserFromSharedPreference() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return jsonDecode(prefs.getString(userDataKey) ?? '');

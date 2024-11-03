@@ -23,6 +23,7 @@ class _ActivityCardState extends State<ActivityCard> {
   TextEditingController _behaviorHourController = TextEditingController();
   TextEditingController _behaviorMinuteController = TextEditingController();
 
+
   String calculateTotalGoal() {
     int total = 0;
 

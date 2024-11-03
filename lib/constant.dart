@@ -56,9 +56,9 @@ const List<String> myJournalItems = [
 const secondaryColor = Color(0xfff5b342);
 
 const Map<String, List<String>> activityTypes = {
-  'Strenuous': ['Running', 'Jogging', 'Football', 'Soccer', 'Basketball'],
-  'Moderate': ['Baseball', 'Tennis', 'Fast Walking', 'Volleyball', 'Badminton'],
-  'Mild': ['Yoga', 'Archery', 'Bowling', 'Golf', 'Easy Walking']
+  'Strenuous': ['Running', 'Jogging','Hockey', 'Football', 'Soccer','Squash', 'Basketball', 'Judo', 'Roller Skating', 'Swimming', 'Long-Distance Bicycling', 'Other'],
+  'Moderate': ['Baseball', 'Tennis', 'Fast Walking', 'Volleyball', 'Badminton', 'Easy Bicycling', 'Easy Swimming', 'Dancing', 'Other'],
+  'Mild': ['Yoga', 'Archery', 'Fishing', 'Bowling', 'Golf', 'Easy Walking', 'Other']
 };
 
 const List<String> screenTimeType = ['Academic', 'Gaming & Video Chatting'];
